@@ -25,3 +25,13 @@ proguard/
 
 # Log Files
 *.log
+
+# Android Studio and Gradle specific entries
+.gradle
+.idea
+*.iml
+build
+
+# Mac .DS_Store files
+.DS_Store
+
