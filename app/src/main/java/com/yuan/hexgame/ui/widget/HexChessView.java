@@ -2,6 +2,8 @@ package com.yuan.hexgame.ui.widget;
 
 import android.content.Context;
 
+import com.yuan.hexgame.game.Player;
+
 /**
  * A proxy of HexView
  * Created by Yuan Sun on 2015/9/10.

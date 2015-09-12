@@ -12,13 +12,14 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.yuan.hexgame.R;
+import com.yuan.hexgame.game.Player;
 
 /**
  * Created by Yuan Sun on 2015/9/10.
  */
-class HexView extends View implements HexChess {
+public class HexView extends View implements HexChess {
 
-    public static final int STROKE_SIZE = 5;
+    public static final int STROKE_SIZE = 1;
     private static final double SQRT_3 = Math.sqrt(3);
     private static final int PAINT_FILL_INIT_COLOR = 0xFF010101;
 

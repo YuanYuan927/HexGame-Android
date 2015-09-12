@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="player_a_chess_color">#FFFF0000</color>
-    <color name="player_b_chess_color">#FFFF0000</color>
+    <color name="player_b_chess_color">#FF0000FF</color>
 </resources>
