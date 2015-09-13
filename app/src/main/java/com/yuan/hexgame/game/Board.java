@@ -5,6 +5,8 @@ package com.yuan.hexgame.game;
  */
 public interface Board {
 
+    public int getChessNum();
+
     public void setFirstPlayer(Player player);
 
     public Player getFirstPlayer();

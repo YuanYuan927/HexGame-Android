@@ -42,6 +42,11 @@ public class ChessBoard implements Board {
     }
 
     @Override
+    public int getChessNum() {
+        return mNum;
+    }
+
+    @Override
     public void setFirstPlayer(Player player) {
         mFirstPlayer = player;
     }

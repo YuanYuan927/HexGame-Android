@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import com.yuan.hexgame.R;
 import com.yuan.hexgame.game.Board;
 import com.yuan.hexgame.game.ChessBoard;
+import com.yuan.hexgame.game.MonteCarloRobot;
 import com.yuan.hexgame.game.Player;
+import com.yuan.hexgame.game.Robot;
 import com.yuan.hexgame.ui.widget.HexChess;
 import com.yuan.hexgame.ui.widget.HexView;
 import com.yuan.hexgame.util.LogUtil;
@@ -27,18 +29,22 @@ public class HexGameActivity extends Activity {
 
     private Board mChessBoard;
 
+    private Robot mRobot;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hex_game);
         mRootLayout = (ViewGroup) findViewById(R.id.rl_hex_game);
 
+        // Get the screen size
         DisplayMetrics dm = getResources().getDisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         LogUtil.i(TAG, "width=" + dm.widthPixels + " height=" + dm.heightPixels);
         mScreenWidth = dm.widthPixels;
         mScreenHeight = dm.heightPixels;
 
+        // Draw the chess board
         int CHESS_SIZE = 70;
         int CHESS_NUM = 9;
         int xDelta = (int) (CHESS_SIZE * Math.sqrt(3));
@@ -63,6 +69,8 @@ public class HexGameActivity extends Activity {
         }
 
         mChessBoard = new ChessBoard(CHESS_NUM, Player.A);
+
+        mRobot = new MonteCarloRobot(Player.B);
     }
 
     private View.OnClickListener mHexChessOnClickListener = new View.OnClickListener() {
