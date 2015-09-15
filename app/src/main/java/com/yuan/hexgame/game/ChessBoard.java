@@ -92,14 +92,14 @@ public class ChessBoard implements Board {
                 uf.union(i, i + mN);
             }
         } else if (i == mNum - mN + 1) { // bottom-left
-            if (mBoard[i - 1] == player) {
-                uf.union(i, i - 1);
+            if (mBoard[i + 1] == player) {
+                uf.union(i, i + 1);
             }
-            if (mBoard[i + mN - 1] == player) {
-                uf.union(i, i + mN - 1);
+            if (mBoard[i - mN] == player) {
+                uf.union(i, i - mN);
             }
-            if (mBoard[i + mN] == player) {
-                uf.union(i, i + mN);
+            if (mBoard[i - mN + 1] == player) {
+                uf.union(i, i - mN + 1);
             }
         } else if (row == 0) { // top
             if (mBoard[i - 1] == player) {

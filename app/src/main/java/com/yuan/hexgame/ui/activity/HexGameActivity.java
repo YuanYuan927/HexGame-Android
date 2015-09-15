@@ -31,6 +31,8 @@ public class HexGameActivity extends Activity {
 
     private Robot mRobot;
 
+    private HexView[] mHexViews;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,16 +57,18 @@ public class HexGameActivity extends Activity {
         int boardWidth = xDelta * CHESS_NUM + xOffset * (CHESS_NUM - 1);
         int leftTopX = (mScreenWidth - boardWidth) / 2;
         int leftTopY = (mScreenHeight - boardHeight) / 2;
+        mHexViews = new HexView[CHESS_NUM * CHESS_NUM + 1];
         for (int i = 1; i <= CHESS_NUM; i++) {
             for (int j = 1; j <= CHESS_NUM; j++) {
                 int x = leftTopX + (j - 1) * xDelta + (i - 1) * xOffset;
                 int y = leftTopY + (i - 1) * yDelta;
-                HexView hexView = new HexView(this, CHESS_SIZE);
-                hexView.setX(x);
-                hexView.setY(y);
-                hexView.setTag((i - 1) * CHESS_NUM + j);
-                hexView.setOnClickListener(mHexChessOnClickListener);
-                mRootLayout.addView(hexView);
+                int id = (i - 1) * CHESS_NUM + j;
+                mHexViews[id] = new HexView(this, CHESS_SIZE);
+                mHexViews[id].setX(x);
+                mHexViews[id].setY(y);
+                mHexViews[id].setTag(id);
+                mHexViews[id].setOnClickListener(mHexChessOnClickListener);
+                mRootLayout.addView(mHexViews[id]);
             }
         }
 
@@ -80,16 +84,19 @@ public class HexGameActivity extends Activity {
             LogUtil.i(TAG, "Chess " + chessId + " is clicked.");
             ((HexView)v).setOwner(mCurrentPlayer);
             mChessBoard.setOwner(chessId, mCurrentPlayer);
+            int robotChessPos = mRobot.getChessPos(mChessBoard);
+            mHexViews[robotChessPos].setOwner(mCurrentPlayer.component());
+            mChessBoard.setOwner(robotChessPos, mCurrentPlayer.component());
             if (mChessBoard.isAWin()) {
                 LogUtil.i(TAG, "A win!");
             } else if (mChessBoard.isBWin()) {
                 LogUtil.i(TAG, "B win!");
             }
-            if (mCurrentPlayer == Player.A) {
-                mCurrentPlayer = Player.B;
-            } else {
-                mCurrentPlayer = Player.A;
-            }
+//            if (mCurrentPlayer == Player.A) {
+//                mCurrentPlayer = Player.B;
+//            } else {
+//                mCurrentPlayer = Player.A;
+//            }
         }
     };
 
