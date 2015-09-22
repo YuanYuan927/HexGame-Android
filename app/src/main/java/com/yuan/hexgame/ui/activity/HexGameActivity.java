@@ -12,7 +12,7 @@ import com.yuan.hexgame.game.ChessBoard;
 import com.yuan.hexgame.game.MonteCarloRobot;
 import com.yuan.hexgame.game.Player;
 import com.yuan.hexgame.game.Robot;
-import com.yuan.hexgame.ui.widget.HexChess;
+import com.yuan.hexgame.ui.dialog.GameResultDialogFragment;
 import com.yuan.hexgame.ui.widget.HexView;
 import com.yuan.hexgame.util.LogUtil;
 
@@ -88,8 +88,10 @@ public class HexGameActivity extends Activity {
             mHexViews[robotChessPos].setOwner(mCurrentPlayer.component());
             mChessBoard.setOwner(robotChessPos, mCurrentPlayer.component());
             if (mChessBoard.isAWin()) {
+                new GameResultDialogFragment().show(getFragmentManager(), "A Win");
                 LogUtil.i(TAG, "A win!");
             } else if (mChessBoard.isBWin()) {
+                new GameResultDialogFragment().show(getFragmentManager(), "B Win");
                 LogUtil.i(TAG, "B win!");
             }
 //            if (mCurrentPlayer == Player.A) {
