@@ -88,10 +88,10 @@ public class HexGameActivity extends Activity {
             mHexViews[robotChessPos].setOwner(mCurrentPlayer.component());
             mChessBoard.setOwner(robotChessPos, mCurrentPlayer.component());
             if (mChessBoard.isAWin()) {
-                new GameResultDialogFragment().show(getFragmentManager(), "A Win");
+                GameResultDialogFragment.newInstance(Player.A).show(getFragmentManager(), "A Win");
                 LogUtil.i(TAG, "A win!");
             } else if (mChessBoard.isBWin()) {
-                new GameResultDialogFragment().show(getFragmentManager(), "B Win");
+                GameResultDialogFragment.newInstance(Player.B).show(getFragmentManager(), "B Win");
                 LogUtil.i(TAG, "B win!");
             }
 //            if (mCurrentPlayer == Player.A) {
