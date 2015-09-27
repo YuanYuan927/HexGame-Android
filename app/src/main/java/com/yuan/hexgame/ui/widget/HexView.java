@@ -21,7 +21,7 @@ public class HexView extends View implements HexChess {
 
     public static final int STROKE_SIZE = 1;
     private static final double SQRT_3 = Math.sqrt(3);
-    private static final int PAINT_FILL_INIT_COLOR = 0xFF010101;
+    private static final int PAINT_FILL_INIT_COLOR = 0x01010101;
 
     private Player mOwner;
     private boolean isOccupied;
@@ -52,7 +52,8 @@ public class HexView extends View implements HexChess {
         mOwner = player;
         isOccupied = true;
         Resources res = getResources();
-        int color = player.equals(Player.A) ? res.getColor(R.color.player_a_chess_color) : res.getColor(R.color.player_b_chess_color);
+        int color = player.equals(Player.A) ? res.getColor(R.color.indigo_500) : res.getColor(R.color.pink_500);
+        color &= 0xCCFFFFFF;
         mFillPaint.setColor(color);
         invalidate();
     }
@@ -79,7 +80,7 @@ public class HexView extends View implements HexChess {
         mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         mStrokePaint.setStrokeWidth(STROKE_SIZE * 2);
         mStrokePaint.setStrokeCap(Paint.Cap.ROUND);
-        mStrokePaint.setColor(0xFFFFFFFF);
+        mStrokePaint.setColor(getResources().getColor(R.color.gray_100));
         mStrokePaint.setStyle(Paint.Style.STROKE);
 
         mFillPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);

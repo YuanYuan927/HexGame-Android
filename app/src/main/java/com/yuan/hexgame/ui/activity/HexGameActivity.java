@@ -1,10 +1,19 @@
 package com.yuan.hexgame.ui.activity;
 
 import android.app.Activity;
+import android.app.WallpaperManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.yuan.hexgame.R;
 import com.yuan.hexgame.game.Board;
@@ -14,6 +23,7 @@ import com.yuan.hexgame.game.Player;
 import com.yuan.hexgame.game.Robot;
 import com.yuan.hexgame.ui.dialog.GameResultDialogFragment;
 import com.yuan.hexgame.ui.widget.HexView;
+import com.yuan.hexgame.util.FastBlur;
 import com.yuan.hexgame.util.LogUtil;
 
 
@@ -22,6 +32,7 @@ public class HexGameActivity extends Activity {
     private static final String TAG = "HexGameActivity";
 
     private ViewGroup mRootLayout;
+
     private int mScreenWidth;
     private int mScreenHeight;
 
@@ -36,8 +47,14 @@ public class HexGameActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_hex_game);
         mRootLayout = (ViewGroup) findViewById(R.id.rl_hex_game);
+
+        Drawable systemBackground = WallpaperManager.getInstance(this).getDrawable();
+        Bitmap bmp = blur(((BitmapDrawable) systemBackground).getBitmap());
+        mRootLayout.setBackgroundDrawable(new BitmapDrawable(getResources(), bmp));
 
         // Get the screen size
         DisplayMetrics dm = getResources().getDisplayMetrics();
@@ -82,7 +99,7 @@ public class HexGameActivity extends Activity {
         public void onClick(View v) {
             int chessId = (int) v.getTag();
             LogUtil.i(TAG, "Chess " + chessId + " is clicked.");
-            ((HexView)v).setOwner(mCurrentPlayer);
+            ((HexView) v).setOwner(mCurrentPlayer);
             mChessBoard.setOwner(chessId, mCurrentPlayer);
             int robotChessPos = mRobot.getChessPos(mChessBoard);
             mHexViews[robotChessPos].setOwner(mCurrentPlayer.component());
@@ -101,5 +118,17 @@ public class HexGameActivity extends Activity {
 //            }
         }
     };
+
+    private Bitmap blur(Bitmap bmp) {
+        int bmpWidth = bmp.getWidth();
+        int bmpHeight = bmp.getHeight();
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(0.1f, 0.1f);
+
+        Bitmap resizeBitmap = Bitmap.createBitmap(bmp, 0, 0, bmpWidth, bmpHeight, matrix, false);
+
+        return FastBlur.doBlur(resizeBitmap, 2, true);
+    }
 
 }
