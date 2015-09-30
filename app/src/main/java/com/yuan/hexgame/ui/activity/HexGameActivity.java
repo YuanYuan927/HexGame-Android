@@ -3,7 +3,6 @@ package com.yuan.hexgame.ui.activity;
 import android.app.Activity;
 import android.app.WallpaperManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -13,14 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
 import com.yuan.hexgame.R;
-import com.yuan.hexgame.game.Board;
-import com.yuan.hexgame.game.ChessBoard;
-import com.yuan.hexgame.game.MonteCarloRobot;
+import com.yuan.hexgame.game.Game;
+import com.yuan.hexgame.game.HexGame;
 import com.yuan.hexgame.game.Player;
-import com.yuan.hexgame.game.Robot;
 import com.yuan.hexgame.ui.dialog.GameResultDialogFragment;
 import com.yuan.hexgame.ui.widget.HexView;
 import com.yuan.hexgame.util.FastBlur;
@@ -36,11 +32,8 @@ public class HexGameActivity extends Activity {
     private int mScreenWidth;
     private int mScreenHeight;
 
-    private Player mCurrentPlayer = Player.A;
+    private Game mGame;
 
-    private Board mChessBoard;
-
-    private Robot mRobot;
 
     private HexView[] mHexViews;
 
@@ -89,9 +82,7 @@ public class HexGameActivity extends Activity {
             }
         }
 
-        mChessBoard = new ChessBoard(CHESS_NUM, Player.A);
-
-        mRobot = new MonteCarloRobot(Player.B);
+        mGame = new HexGame(CHESS_NUM, mHexViews);
     }
 
     private View.OnClickListener mHexChessOnClickListener = new View.OnClickListener() {
@@ -99,23 +90,14 @@ public class HexGameActivity extends Activity {
         public void onClick(View v) {
             int chessId = (int) v.getTag();
             LogUtil.i(TAG, "Chess " + chessId + " is clicked.");
-            ((HexView) v).setOwner(mCurrentPlayer);
-            mChessBoard.setOwner(chessId, mCurrentPlayer);
-            int robotChessPos = mRobot.getChessPos(mChessBoard);
-            mHexViews[robotChessPos].setOwner(mCurrentPlayer.component());
-            mChessBoard.setOwner(robotChessPos, mCurrentPlayer.component());
-            if (mChessBoard.isAWin()) {
+            mGame.putPiece(chessId);
+            if (mGame.isAWin()) {
                 GameResultDialogFragment.newInstance(Player.A).show(getFragmentManager(), "A Win");
                 LogUtil.i(TAG, "A win!");
-            } else if (mChessBoard.isBWin()) {
+            } else if (mGame.isBWin()) {
                 GameResultDialogFragment.newInstance(Player.B).show(getFragmentManager(), "B Win");
                 LogUtil.i(TAG, "B win!");
             }
-//            if (mCurrentPlayer == Player.A) {
-//                mCurrentPlayer = Player.B;
-//            } else {
-//                mCurrentPlayer = Player.A;
-//            }
         }
     };
 

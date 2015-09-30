@@ -11,19 +11,13 @@ import com.yuan.hexgame.algorithm.WeightedQuickUnionPathCompressionUF;
  */
 public class ChessBoard implements Board {
 
-    private static final char A = 'A';
-    private static final char B = 'B';
-    private static final char EMPTY = 'O';
-
     private Player[] mBoard;
     private int mNum; // The amount of hex pieces.
     private int mN;   // The board size is NxN
-    private Player mFirstPlayer;
-    private Player mCurrentPlayer;
 
     private UnionFind mUFA, mUFB;
 
-    public ChessBoard(int n, Player firstPlayer) {
+    public ChessBoard(int n) {
         this.mN = n;
         this.mNum = n * n;
         mBoard = new Player[mNum + 1];
@@ -36,9 +30,6 @@ public class ChessBoard implements Board {
             mUFB.union(0, i + 1);
             mUFB.union(mNum + 1, (n - 1) * n + i + 1);
         }
-
-        mFirstPlayer = firstPlayer;
-        mCurrentPlayer = firstPlayer == Player.A ? Player.B : Player.A;
     }
 
     @Override
@@ -47,23 +38,11 @@ public class ChessBoard implements Board {
     }
 
     @Override
-    public void setFirstPlayer(Player player) {
-        mFirstPlayer = player;
-    }
-
-    @Override
-    public Player getFirstPlayer() {
-        return mFirstPlayer;
-    }
-
-    @Override
     public void setOwner(int i, Player player) {
-        // TODO
         validate(i);
-        if (player == mCurrentPlayer)
+        if (mBoard[i] != null)
             return;
         mBoard[i] = player;
-        mCurrentPlayer = player;
         int row = (i - 1) / mN;
         int col = (i - 1) % mN;
         UnionFind uf = player == Player.A ? mUFA : mUFB;
@@ -195,6 +174,21 @@ public class ChessBoard implements Board {
     @Override
     public boolean isBWin() {
         return mUFB.isConnected(0, mNum + 1);
+    }
+
+    @Override
+    public void restart() {
+        for (int i = 0; i < mNum; i++) {
+            mBoard[i] = null;
+        }
+        mUFA = new WeightedQuickUnionPathCompressionUF(mNum + 2);
+        mUFB = new WeightedQuickUnionPathCompressionUF(mNum + 2);
+        for (int i = 0; i < mN; i++) {
+            mUFA.union(0, i * mN + 1);
+            mUFA.union(mNum + 1, (i + 1) * mN);
+            mUFB.union(0, i + 1);
+            mUFB.union(mNum + 1, (mN - 1) * mN + i + 1);
+        }
     }
 
     private void validate(int i) {
