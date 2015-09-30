@@ -19,6 +19,7 @@ import com.yuan.hexgame.game.HexGame;
 import com.yuan.hexgame.game.Player;
 import com.yuan.hexgame.ui.dialog.GameResultDialogFragment;
 import com.yuan.hexgame.ui.widget.HexView;
+import com.yuan.hexgame.ui.widget.MenuBar;
 import com.yuan.hexgame.util.FastBlur;
 import com.yuan.hexgame.util.LogUtil;
 
@@ -27,13 +28,15 @@ public class HexGameActivity extends Activity {
 
     private static final String TAG = "HexGameActivity";
 
+    private ViewGroup mBackground;
     private ViewGroup mRootLayout;
+
+    private MenuBar mMenuBar;
 
     private int mScreenWidth;
     private int mScreenHeight;
 
     private Game mGame;
-
 
     private HexView[] mHexViews;
 
@@ -43,11 +46,17 @@ public class HexGameActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_hex_game);
-        mRootLayout = (ViewGroup) findViewById(R.id.rl_hex_game);
+        mBackground = (ViewGroup) findViewById(R.id.rl_hex_game_background);
+        mRootLayout = (ViewGroup) findViewById(R.id.rl_background_mask);
+        mRootLayout.setOnLongClickListener(mOnLongClickListener);
+        mRootLayout.setOnClickListener(mOnClickListener);
+        mMenuBar = (MenuBar) findViewById(R.id.menu_bar);
+        mMenuBar.setVisibility(View.INVISIBLE);
+        mMenuBar.setOnMenuOptionClickListener(mOnMenuOptionClickListener);
 
         Drawable systemBackground = WallpaperManager.getInstance(this).getDrawable();
         Bitmap bmp = blur(((BitmapDrawable) systemBackground).getBitmap());
-        mRootLayout.setBackgroundDrawable(new BitmapDrawable(getResources(), bmp));
+        mBackground.setBackgroundDrawable(new BitmapDrawable(getResources(), bmp));
 
         // Get the screen size
         DisplayMetrics dm = getResources().getDisplayMetrics();
@@ -85,6 +94,7 @@ public class HexGameActivity extends Activity {
         mGame = new HexGame(CHESS_NUM, mHexViews);
     }
 
+
     private View.OnClickListener mHexChessOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -98,6 +108,37 @@ public class HexGameActivity extends Activity {
                 GameResultDialogFragment.newInstance(Player.B).show(getFragmentManager(), "B Win");
                 LogUtil.i(TAG, "B win!");
             }
+        }
+    };
+
+    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.rl_background_mask:
+                    mMenuBar.setVisibility(View.INVISIBLE);
+                    break;
+            }
+        }
+    };
+
+    private View.OnLongClickListener mOnLongClickListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            mMenuBar.setVisibility(View.VISIBLE);
+            return true;
+        }
+    };
+
+    private MenuBar.OnMenuOptionClickListener mOnMenuOptionClickListener = new MenuBar.OnMenuOptionClickListener() {
+        @Override
+        public void onSettingsClick() {
+
+        }
+
+        @Override
+        public void onShareClick() {
+
         }
     };
 

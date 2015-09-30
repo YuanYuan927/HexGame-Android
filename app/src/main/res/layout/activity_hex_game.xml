@@ -1,16 +1,23 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rl_hex_game"
+    android:id="@+id/rl_hex_game_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
     tools:context=".HexGameActivity">
 
     <RelativeLayout
+        android:id="@+id/rl_background_mask"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#88000000">
     </RelativeLayout>
+
+    <com.yuan.hexgame.ui.widget.MenuBar
+        android:id="@+id/menu_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"/>
 
 </RelativeLayout>
