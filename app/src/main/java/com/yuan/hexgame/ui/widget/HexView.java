@@ -143,7 +143,11 @@ public class HexView extends View implements HexChess {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         Bitmap background = getDrawingCache();
-        int pixel = background.getPixel((int) event.getX(), (int) event.getY());
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+        if (x < 0 || x >= background.getWidth() || y < 0 || y >= background.getHeight())
+            return false;
+        int pixel = background.getPixel(x, y);
         if (Color.TRANSPARENT == pixel) {
             return false;
         }
