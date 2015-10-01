@@ -31,9 +31,11 @@ public class MenuBar extends RelativeLayout {
     public MenuBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         View layout = LayoutInflater.from(context).inflate(R.layout.widget_menu_bar, this, true);
+        layout.setOnClickListener(mOnClickListener);
         mIvSettings = (ImageView) layout.findViewById(R.id.iv_settings);
         mIvShare = (ImageView) layout.findViewById(R.id.iv_social_share);
-
+        mIvSettings.setOnClickListener(mOnClickListener);
+        mIvShare.setOnClickListener(mOnClickListener);
     }
 
     private OnClickListener mOnClickListener = new OnClickListener() {
