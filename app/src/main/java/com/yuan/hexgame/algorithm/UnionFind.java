@@ -22,4 +22,6 @@ public interface UnionFind {
      * @return
      */
     public int count();
+
+    public UnionFind clone();
 }

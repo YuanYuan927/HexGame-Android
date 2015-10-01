@@ -6,12 +6,6 @@ package com.yuan.hexgame.game;
 public interface Robot {
 
     /**
-     * Set which player is Robot
-     * @param player
-     */
-    public void setPlayer(Player player);
-
-    /**
      * Get the position where Robot puts the hex piece
      * @param board
      * @return

@@ -9,6 +9,10 @@ public class WeightedQuickUnionPathCompressionUF implements UnionFind {
     private int[] size;
     private int count;
 
+    private WeightedQuickUnionPathCompressionUF() {
+
+    }
+
     public WeightedQuickUnionPathCompressionUF(int n) {
         this.count = n;
         parent = new int[n];
@@ -67,4 +71,17 @@ public class WeightedQuickUnionPathCompressionUF implements UnionFind {
         }
     }
 
+    @Override
+    public WeightedQuickUnionPathCompressionUF clone() {
+        WeightedQuickUnionPathCompressionUF uf = new WeightedQuickUnionPathCompressionUF();
+        int n = parent.length;
+        uf.parent = new int[n];
+        uf.size = new int[n];
+        uf.count = count;
+        for (int i = 0; i < n; i++) {
+            uf.parent[i] = parent[i];
+            uf.size[i] = size[i];
+        }
+        return uf;
+    }
 }

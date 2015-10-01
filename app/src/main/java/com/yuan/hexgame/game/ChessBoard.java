@@ -3,7 +3,6 @@ package com.yuan.hexgame.game;
 import com.yuan.hexgame.algorithm.UnionFind;
 import com.yuan.hexgame.algorithm.WeightedQuickUnionPathCompressionUF;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,6 +19,10 @@ public class ChessBoard implements Board {
     private int mN;   // The board size is NxN
 
     private UnionFind mUFA, mUFB;
+
+    private ChessBoard() {
+
+    }
 
     public ChessBoard(int n) {
         this.mN = n;
@@ -148,7 +151,7 @@ public class ChessBoard implements Board {
             adjs.add(i - 1);
             adjs.add(i + 1);
             adjs.add(i + mN);
-            adjs.add(i + mN + 1);
+            adjs.add(i + mN - 1);
         } else if (row == mN - 1) { // bottom
             adjs.add(i - 1);
             adjs.add(i + 1);
@@ -162,7 +165,7 @@ public class ChessBoard implements Board {
         } else if (col == mN - 1) { // right
             adjs.add(i - mN);
             adjs.add(i + mN);
-            adjs.add(i - mN - 1);
+            adjs.add(i + mN - 1);
             adjs.add(i - 1);
         } else {
             adjs.add(i - mN);
@@ -173,5 +176,20 @@ public class ChessBoard implements Board {
             adjs.add(i + 1);
         }
         return adjs;
+    }
+
+    @Override
+    public ChessBoard clone() {
+        ChessBoard board = new ChessBoard();
+        board.mNum = mNum; // The amount of hex pieces.
+        board.mN = mN;   // The board size is NxN
+        board.mBoard = new Player[mNum + 1];
+        for (int i = 0; i < mBoard.length; i++) {
+            board.mBoard[i] = mBoard[i];
+        }
+        board.mUFA = mUFA.clone();
+        board.mUFB = mUFB.clone();
+
+        return board;
     }
 }

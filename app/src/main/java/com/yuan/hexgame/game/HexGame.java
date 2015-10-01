@@ -1,6 +1,7 @@
 package com.yuan.hexgame.game;
 
 import android.animation.ObjectAnimator;
+import android.os.AsyncTask;
 
 import com.yuan.hexgame.ui.widget.HexView;
 import com.yuan.hexgame.util.LogUtil;
@@ -26,6 +27,11 @@ public class HexGame implements Game {
 
     private HexView[] mHexViews; // 1 ~ NxN
 
+    private OnGameOverListener mOnGameOverListener;
+
+    private boolean isGameOver = false;
+    private Player mWinner;
+
     private List<Integer> mOccupiedViewIds = new LinkedList<>();
 
     public HexGame(int n, HexView[] hexViews) {
@@ -44,16 +50,38 @@ public class HexGame implements Game {
             LogUtil.i(TAG, "Chess " + id + " is occupied.");
             return;
         }
+//        mOccupiedViewIds.add(id);
+//        mBoard.setOwner(id, mCurrentPlayer);
+//        mHexViews[id].setOwner(mCurrentPlayer);
+//        mCurrentPlayer = mCurrentPlayer.component();
+        doPutPiece(id);
+        if (mSettings.getGameMode() == GameSettings.MODE_HUMAN_VS_ROBOT && (!isGameOver)) {
+//            int robotChessPos = mRobot.getChessPos(mBoard);
+//            mOccupiedViewIds.add(robotChessPos);
+//            mBoard.setOwner(robotChessPos, mCurrentPlayer);
+//            mHexViews[robotChessPos].setOwner(mCurrentPlayer);
+//            mCurrentPlayer = mCurrentPlayer.component();
+            new RobotTask().execute();
+        }
+    }
+
+    private void doPutPiece(int id) {
         mOccupiedViewIds.add(id);
         mBoard.setOwner(id, mCurrentPlayer);
         mHexViews[id].setOwner(mCurrentPlayer);
         mCurrentPlayer = mCurrentPlayer.component();
-        if (mSettings.getGameMode() == GameSettings.MODE_HUMAN_VS_ROBOT) {
-            int robotChessPos = mRobot.getChessPos(mBoard);
-            mOccupiedViewIds.add(robotChessPos);
-            mBoard.setOwner(robotChessPos, mCurrentPlayer);
-            mHexViews[robotChessPos].setOwner(mCurrentPlayer);
-            mCurrentPlayer = mCurrentPlayer.component();
+        if (isAWin()) {
+            mWinner = Player.A;
+            isGameOver = true;
+            if (mOnGameOverListener != null) {
+                mOnGameOverListener.onGameOver(mWinner);
+            }
+        } else if (isBWin()) {
+            mWinner = Player.B;
+            isGameOver = true;
+            if (mOnGameOverListener != null) {
+                mOnGameOverListener.onGameOver(mWinner);
+            }
         }
     }
 
@@ -86,6 +114,26 @@ public class HexGame implements Game {
             i++;
         }
         mOccupiedViewIds.clear();
+        isGameOver = false;
+        mWinner = null;
+    }
+
+    @Override
+    public void setOnGameOverListener(OnGameOverListener onGameOverListener) {
+        mOnGameOverListener = onGameOverListener;
+    }
+
+    private class RobotTask extends AsyncTask<Void, Integer, Integer> {
+
+        @Override
+        protected Integer doInBackground(Void... params) {
+            return mRobot.getChessPos(mBoard);
+        }
+
+        @Override
+        protected void onPostExecute(Integer id) {
+            doPutPiece(id);
+        }
     }
 
 }

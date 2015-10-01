@@ -24,7 +24,8 @@ import com.yuan.hexgame.util.FastBlur;
 import com.yuan.hexgame.util.LogUtil;
 
 
-public class HexGameActivity extends Activity implements GameResultDialogFragment.GameResultDialogListener {
+public class HexGameActivity extends Activity
+        implements GameResultDialogFragment.GameResultDialogListener, Game.OnGameOverListener {
 
     private static final String TAG = "HexGameActivity";
 
@@ -71,7 +72,7 @@ public class HexGameActivity extends Activity implements GameResultDialogFragmen
         int xDelta = (int) (CHESS_SIZE * Math.sqrt(3));
         int yDelta = CHESS_SIZE * 3 / 2;
         int xOffset = xDelta / 2;
-        CHESS_NUM = (int) (mScreenHeight / (CHESS_SIZE * 1.7));
+        CHESS_NUM = 5; //(int) (mScreenHeight / (CHESS_SIZE * 1.7));
         int boardHeight = CHESS_NUM * CHESS_SIZE * 3 / 2 + CHESS_SIZE / 2;
         int boardWidth = xDelta * CHESS_NUM + xOffset * (CHESS_NUM - 1);
         int leftTopX = (mScreenWidth - boardWidth) / 2;
@@ -92,6 +93,7 @@ public class HexGameActivity extends Activity implements GameResultDialogFragmen
         }
 
         mGame = new HexGame(CHESS_NUM, mHexViews);
+        mGame.setOnGameOverListener(this);
     }
 
 
@@ -101,13 +103,6 @@ public class HexGameActivity extends Activity implements GameResultDialogFragmen
             int chessId = (int) v.getTag();
             LogUtil.i(TAG, "Chess " + chessId + " is clicked.");
             mGame.putPiece(chessId);
-            if (mGame.isAWin()) {
-                GameResultDialogFragment.newInstance(Player.A).show(getFragmentManager(), "A Win");
-                LogUtil.i(TAG, "A win!");
-            } else if (mGame.isBWin()) {
-                GameResultDialogFragment.newInstance(Player.B).show(getFragmentManager(), "B Win");
-                LogUtil.i(TAG, "B win!");
-            }
         }
     };
 
@@ -162,5 +157,11 @@ public class HexGameActivity extends Activity implements GameResultDialogFragmen
     @Override
     public void onShareResultClick() {
 
+    }
+
+    @Override
+    public void onGameOver(Player winner) {
+        GameResultDialogFragment.newInstance(winner).show(getFragmentManager(), "Game Result");
+//        LogUtil.i(TAG, "A win!");
     }
 }

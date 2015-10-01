@@ -27,4 +27,6 @@ public interface Board {
     public boolean isBWin();
 
     public void restart();
+
+    public Board clone();
 }

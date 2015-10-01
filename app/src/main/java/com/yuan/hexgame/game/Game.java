@@ -13,4 +13,9 @@ public interface Game {
 
     public void restart();
 
+    public void setOnGameOverListener(OnGameOverListener onGameOverListener);
+
+    public interface OnGameOverListener {
+        public void onGameOver(Player winner);
+    }
 }
