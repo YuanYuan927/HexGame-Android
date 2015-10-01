@@ -13,6 +13,15 @@ public interface Board {
 
     public boolean isOccupied(int i);
 
+    /**
+     * Used for Robot. Test whether wins if i is owned by him.
+     *
+     * @param i
+     * @param player
+     * @return
+     */
+    public boolean isWinIfOwned(int i, Player player);
+
     public boolean isAWin();
 
     public boolean isBWin();

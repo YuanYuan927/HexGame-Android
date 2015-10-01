@@ -3,6 +3,10 @@ package com.yuan.hexgame.game;
 import com.yuan.hexgame.algorithm.UnionFind;
 import com.yuan.hexgame.algorithm.WeightedQuickUnionPathCompressionUF;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by Yuan Sun on 2015/9/13.
  *
@@ -43,113 +47,11 @@ public class ChessBoard implements Board {
         if (mBoard[i] != null)
             return;
         mBoard[i] = player;
-        int row = (i - 1) / mN;
-        int col = (i - 1) % mN;
         UnionFind uf = player == Player.A ? mUFA : mUFB;
-        if (i == 1) { // top-left
-            if (mBoard[i + 1] == player) {
-                uf.union(i, i + 1);
-            }
-            if (mBoard[i + mN] == player) {
-                uf.union(i, i + mN);
-            }
-        } else if (i == mNum) { // bottom-right
-            if (mBoard[i - 1] == player) {
-                uf.union(i, i - 1);
-            }
-            if (mBoard[i - mN] == player) {
-                uf.union(i, i - mN);
-            }
-        } else if (i == mN) { // top-right
-            if (mBoard[i - 1] == player) {
-                uf.union(i, i - 1);
-            }
-            if (mBoard[i + mN - 1] == player) {
-                uf.union(i, i + mN - 1);
-            }
-            if (mBoard[i + mN] == player) {
-                uf.union(i, i + mN);
-            }
-        } else if (i == mNum - mN + 1) { // bottom-left
-            if (mBoard[i + 1] == player) {
-                uf.union(i, i + 1);
-            }
-            if (mBoard[i - mN] == player) {
-                uf.union(i, i - mN);
-            }
-            if (mBoard[i - mN + 1] == player) {
-                uf.union(i, i - mN + 1);
-            }
-        } else if (row == 0) { // top
-            if (mBoard[i - 1] == player) {
-                uf.union(i, i - 1);
-            }
-            if (mBoard[i + 1] == player) {
-                uf.union(i, i + 1);
-            }
-            if (mBoard[i + mN] == player) {
-                uf.union(i, i + mN);
-            }
-            if (mBoard[i + mN + 1] == player) {
-                uf.union(i, i + mN + 1);
-            }
-        } else if (row == mN - 1) { // bottom
-            if (mBoard[i - 1] == player) {
-                uf.union(i, i - 1);
-            }
-            if (mBoard[i + 1] == player) {
-                uf.union(i, i + 1);
-            }
-            if (mBoard[i - mN] == player) {
-                uf.union(i, i - mN);
-            }
-            if (mBoard[i - mN + 1] == player) {
-                uf.union(i, i - mN + 1);
-            }
-        } else if (col == 0) { // left
-            if (mBoard[i - mN] == player) {
-                uf.union(i, i - mN);
-            }
-            if (mBoard[i + mN] == player) {
-                uf.union(i, i + mN);
-            }
-            if (mBoard[i - mN + 1] == player) {
-                uf.union(i, i - mN + 1);
-            }
-            if (mBoard[i + 1] == player) {
-                uf.union(i, i + 1);
-            }
-        } else if (col == mN - 1) { // right
-            if (mBoard[i - mN] == player) {
-                uf.union(i, i - mN);
-            }
-            if (mBoard[i + mN] == player) {
-                uf.union(i, i + mN);
-            }
-            if (mBoard[i - mN - 1] == player) {
-                uf.union(i, i - mN - 1);
-            }
-            if (mBoard[i - 1] == player) {
-                uf.union(i, i - 1);
-            }
-        } else {
-            if (mBoard[i - mN] == player) {
-                uf.union(i, i - mN);
-            }
-            if (mBoard[i + mN] == player) {
-                uf.union(i, i + mN);
-            }
-            if (mBoard[i - mN + 1] == player) {
-                uf.union(i, i - mN + 1);
-            }
-            if (mBoard[i + mN - 1] == player) {
-                uf.union(i, i + mN - 1);
-            }
-            if (mBoard[i - 1] == player) {
-                uf.union(i, i - 1);
-            }
-            if (mBoard[i + 1] == player) {
-                uf.union(i, i + 1);
+        Iterable<Integer> adjs = getAdjacent(i);
+        for (Integer adj : adjs) {
+            if (mBoard[adj] == player) {
+                uf.union(i, adj);
             }
         }
     }
@@ -164,6 +66,33 @@ public class ChessBoard implements Board {
     public boolean isOccupied(int i) {
         validate(i);
         return mBoard[i] != null;
+    }
+
+    @Override
+    public boolean isWinIfOwned(int i, Player player) {
+        UnionFind uf = player == Player.A ? mUFA : mUFB;
+        int start = uf.find(0);
+        int end = uf.find(mNum + 1);
+        boolean hasStart = false;
+        boolean hasEnd = false;
+        int current = uf.find(i);
+        if (current == start) {
+            hasStart = true;
+        } else if (current == end) {
+            hasEnd = true;
+        }
+        Iterable<Integer> adjs = getAdjacent(i);
+        for (Integer adj : adjs) {
+            if (uf.find(adj) == start) {
+                hasStart = true;
+            }
+            if (uf.find(adj) == end) {
+                hasEnd = true;
+            }
+            if (hasStart && hasEnd)
+                return true;
+        }
+        return false;
     }
 
     @Override
@@ -195,5 +124,54 @@ public class ChessBoard implements Board {
         if (i < 1 || i > mNum) {
             throw new IndexOutOfBoundsException("Index " + i + " is not between 1 and " + mNum);
         }
+    }
+
+    private Iterable<Integer> getAdjacent(int i) {
+        int row = (i - 1) / mN;
+        int col = (i - 1) % mN;
+        List<Integer> adjs = new LinkedList<>();
+        if (i == 1) { // top-left
+            adjs.add(i + 1);
+            adjs.add(i + mN);
+        } else if (i == mNum) { // bottom-right
+            adjs.add(i - 1);
+            adjs.add(i - mN);
+        } else if (i == mN) { // top-right
+            adjs.add(i - 1);
+            adjs.add(i + mN - 1);
+            adjs.add(i + mN);
+        } else if (i == mNum - mN + 1) { // bottom-left
+            adjs.add(i + 1);
+            adjs.add(i - mN);
+            adjs.add(i - mN + 1);
+        } else if (row == 0) { // top
+            adjs.add(i - 1);
+            adjs.add(i + 1);
+            adjs.add(i + mN);
+            adjs.add(i + mN + 1);
+        } else if (row == mN - 1) { // bottom
+            adjs.add(i - 1);
+            adjs.add(i + 1);
+            adjs.add(i - mN);
+            adjs.add(i - mN + 1);
+        } else if (col == 0) { // left
+            adjs.add(i - mN);
+            adjs.add(i + mN);
+            adjs.add(i - mN + 1);
+            adjs.add(i + 1);
+        } else if (col == mN - 1) { // right
+            adjs.add(i - mN);
+            adjs.add(i + mN);
+            adjs.add(i - mN - 1);
+            adjs.add(i - 1);
+        } else {
+            adjs.add(i - mN);
+            adjs.add(i + mN);
+            adjs.add(i - mN + 1);
+            adjs.add(i + mN - 1);
+            adjs.add(i - 1);
+            adjs.add(i + 1);
+        }
+        return adjs;
     }
 }
