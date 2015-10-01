@@ -31,6 +31,8 @@ public class HexView extends View implements HexChess {
     private Paint mStrokePaint;
     private Paint mFillPaint;
 
+    private static Path sPath;
+
     public HexView(Context context, int size) {
         super(context);
         mSize = size;
@@ -106,39 +108,12 @@ public class HexView extends View implements HexChess {
      */
     @Override
     protected void onDraw(Canvas canvas) {
-        int measuredWidth = getMeasuredWidth();
-        int measuredHeight = getMeasuredHeight();
+        if (sPath == null) {
+            sPath = createPath(getMeasuredWidth(), getMeasuredHeight());
+        }
 
-        Path path = new Path();
-        int x0 = measuredWidth / 2;
-        int y0 = (int) (STROKE_SIZE * 2 / SQRT_3);
-
-        int x1 = STROKE_SIZE;
-        int y1 = (int) (measuredHeight / 4 + STROKE_SIZE / SQRT_3);
-
-        int x2 = x1;
-        int y2 = (int) (measuredHeight * 3 / 4 - STROKE_SIZE / SQRT_3);
-
-        int x3 = x0;
-        int y3 = (int) (measuredHeight - STROKE_SIZE * 2 / SQRT_3);
-
-        int x4 = measuredWidth - STROKE_SIZE;
-        int y4 = y2;
-
-        int x5 = x4;
-        int y5 = y1;
-
-        path.moveTo(x0, y0);
-        path.lineTo(x1, y1);
-        path.lineTo(x2, y2);
-        path.lineTo(x3, y3);
-        path.lineTo(x4, y4);
-        path.lineTo(x5, y5);
-        path.close();
-
-
-        canvas.drawPath(path, mFillPaint);
-        canvas.drawPath(path, mStrokePaint);
+        canvas.drawPath(sPath, mFillPaint);
+        canvas.drawPath(sPath, mStrokePaint);
     }
 
     @Override
@@ -167,5 +142,35 @@ public class HexView extends View implements HexChess {
         }
         mFillPaint.setColor(color);
         invalidate();
+    }
+
+    private Path createPath(int measuredWidth, int measuredHeight) {
+        Path path = new Path();
+        int x0 = measuredWidth / 2;
+        int y0 = (int) (STROKE_SIZE * 2 / SQRT_3);
+
+        int x1 = STROKE_SIZE;
+        int y1 = (int) (measuredHeight / 4 + STROKE_SIZE / SQRT_3);
+
+        int x2 = x1;
+        int y2 = (int) (measuredHeight * 3 / 4 - STROKE_SIZE / SQRT_3);
+
+        int x3 = x0;
+        int y3 = (int) (measuredHeight - STROKE_SIZE * 2 / SQRT_3);
+
+        int x4 = measuredWidth - STROKE_SIZE;
+        int y4 = y2;
+
+        int x5 = x4;
+        int y5 = y1;
+
+        path.moveTo(x0, y0);
+        path.lineTo(x1, y1);
+        path.lineTo(x2, y2);
+        path.lineTo(x3, y3);
+        path.lineTo(x4, y4);
+        path.lineTo(x5, y5);
+        path.close();
+        return path;
     }
 }
