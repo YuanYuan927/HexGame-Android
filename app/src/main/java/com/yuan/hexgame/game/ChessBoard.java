@@ -178,7 +178,7 @@ public class ChessBoard implements Board {
 
     @Override
     public void restart() {
-        for (int i = 0; i < mNum; i++) {
+        for (int i = 0; i <= mNum; i++) {
             mBoard[i] = null;
         }
         mUFA = new WeightedQuickUnionPathCompressionUF(mNum + 2);
