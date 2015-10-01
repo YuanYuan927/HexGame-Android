@@ -22,6 +22,7 @@ public class HexView extends View implements HexChess {
     public static final int STROKE_SIZE = 1;
     private static final double SQRT_3 = Math.sqrt(3);
     private static final int PAINT_FILL_INIT_COLOR = 0x01010101;
+    private static final int PAINT_FILL_INIT_ALPHA = 255;
 
     private Player mOwner;
     private boolean isOccupied;
@@ -53,7 +54,7 @@ public class HexView extends View implements HexChess {
         isOccupied = true;
         Resources res = getResources();
         int color = player.equals(Player.A) ? res.getColor(R.color.indigo_500) : res.getColor(R.color.pink_500);
-        color &= 0xCCFFFFFF;
+        color &= ((PAINT_FILL_INIT_ALPHA << 24) | 0x00FFFFFF);
         mFillPaint.setColor(color);
         invalidate();
     }
@@ -152,5 +153,19 @@ public class HexView extends View implements HexChess {
             return false;
         }
         return super.onTouchEvent(event);
+    }
+
+    @Override
+    public void setAlpha(float alpha) {
+        Resources res = getResources();
+        int color = mOwner.equals(Player.A) ? res.getColor(R.color.indigo_500) : res.getColor(R.color.pink_500);
+        int paintAlpha = (int) (PAINT_FILL_INIT_ALPHA * alpha);
+        if (paintAlpha != 0) {
+            color &= ((paintAlpha << 24) | 0x00FFFFFF);
+        } else {
+            color = PAINT_FILL_INIT_COLOR;
+        }
+        mFillPaint.setColor(color);
+        invalidate();
     }
 }

@@ -24,7 +24,7 @@ import com.yuan.hexgame.util.FastBlur;
 import com.yuan.hexgame.util.LogUtil;
 
 
-public class HexGameActivity extends Activity {
+public class HexGameActivity extends Activity implements GameResultDialogFragment.GameResultDialogListener {
 
     private static final String TAG = "HexGameActivity";
 
@@ -133,12 +133,12 @@ public class HexGameActivity extends Activity {
     private MenuBar.OnMenuOptionClickListener mOnMenuOptionClickListener = new MenuBar.OnMenuOptionClickListener() {
         @Override
         public void onSettingsClick() {
-
+            LogUtil.i(TAG, "Click Settings");
         }
 
         @Override
         public void onShareClick() {
-
+            LogUtil.i(TAG, "Click Share");
         }
     };
 
@@ -154,4 +154,13 @@ public class HexGameActivity extends Activity {
         return FastBlur.doBlur(resizeBitmap, 2, true);
     }
 
+    @Override
+    public void onRestartClick() {
+        mGame.restart();
+    }
+
+    @Override
+    public void onShareResultClick() {
+
+    }
 }
