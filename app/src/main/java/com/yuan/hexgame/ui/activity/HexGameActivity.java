@@ -2,6 +2,7 @@ package com.yuan.hexgame.ui.activity;
 
 import android.app.Activity;
 import android.app.WallpaperManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
@@ -19,6 +20,7 @@ import com.yuan.hexgame.game.GameSettings;
 import com.yuan.hexgame.game.HexGame;
 import com.yuan.hexgame.game.Player;
 import com.yuan.hexgame.ui.dialog.GameResultDialogFragment;
+import com.yuan.hexgame.ui.widget.Avatar;
 import com.yuan.hexgame.ui.widget.HexView;
 import com.yuan.hexgame.ui.widget.MenuBar;
 import com.yuan.hexgame.util.FastBlur;
@@ -99,6 +101,33 @@ public class HexGameActivity extends Activity
 
         mGame = new HexGame(this, CHESS_NUM, mHexViews);
         mGame.setOnGameOverListener(this);
+
+        initAvatar();
+    }
+
+    private void initAvatar() {
+        Resources res = getResources();
+        Bitmap playerAAvatar = ((BitmapDrawable) res.getDrawable(R.drawable.avatar_player)).getBitmap();
+        Bitmap playerBAvatar;
+        if (mSettings.getGameMode() == GameSettings.MODE_HUMAN_VS_ROBOT) {
+            playerBAvatar = ((BitmapDrawable) res.getDrawable(R.drawable.avatar_android)).getBitmap();
+        } else {
+            playerBAvatar = playerAAvatar;
+        }
+        Avatar playerA = new Avatar(this, 120, res.getColor(R.color.indigo_500), playerAAvatar);
+        Avatar playerB = new Avatar(this, 120, res.getColor(R.color.pink_500), playerBAvatar);
+
+//        playerA.setBackgroundDrawable(res.getDrawable(R.drawable.avatar_player));
+//        int gameMode = mSettings.getGameMode();
+//        int playerBDrawableId = gameMode == GameSettings.MODE_HUMAN_VS_ROBOT ? R.drawable.avatar_android : R.drawable.avatar_player;
+//        playerB.setBackgroundDrawable(res.getDrawable(playerBDrawableId));
+
+        playerA.setX(50);
+        playerA.setY(mScreenHeight - 50 - 120);
+        playerB.setX(mScreenWidth - 50 - 120);
+        playerB.setY(50);
+        mRootLayout.addView(playerA);
+        mRootLayout.addView(playerB);
     }
 
     @Override
