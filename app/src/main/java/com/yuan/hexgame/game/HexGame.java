@@ -84,7 +84,7 @@ public class HexGame implements Game {
 //            mHexViews[robotChessPos].setOwner(mCurrentPlayer);
 //            mCurrentPlayer = mCurrentPlayer.component();
 //            new RobotTask().execute();
-//            final long startT = System.currentTimeMillis();
+            final long startT = System.currentTimeMillis();
             mRobot.compute(mBoard, new Robot.RobotStatusListener() {
                 @Override
                 public void onStart() {
