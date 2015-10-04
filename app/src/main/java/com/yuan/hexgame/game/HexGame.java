@@ -83,21 +83,21 @@ public class HexGame implements Game {
 //            mBoard.setOwner(robotChessPos, mCurrentPlayer);
 //            mHexViews[robotChessPos].setOwner(mCurrentPlayer);
 //            mCurrentPlayer = mCurrentPlayer.component();
-            new RobotTask().execute();
+//            new RobotTask().execute();
 //            final long startT = System.currentTimeMillis();
-//            mRobot.compute(mBoard, new Robot.RobotStatusListener() {
-//                @Override
-//                public void onStart() {
-//
-//                }
-//
-//                @Override
-//                public void onCompleted(int optimalPos) {
-//                    doPutPiece(optimalPos);
-//                    long endT = System.currentTimeMillis();
-//                    LogUtil.i(TAG, "Robot cost " + (endT - startT) + "ms");
-//                }
-//            });
+            mRobot.compute(mBoard, new Robot.RobotStatusListener() {
+                @Override
+                public void onStart() {
+
+                }
+
+                @Override
+                public void onCompleted(int optimalPos) {
+                    doPutPiece(optimalPos);
+                    long endT = System.currentTimeMillis();
+                    LogUtil.i(TAG, "Robot cost " + (endT - startT) + "ms");
+                }
+            });
         }
     }
 
