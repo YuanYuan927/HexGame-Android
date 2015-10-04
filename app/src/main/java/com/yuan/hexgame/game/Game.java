@@ -5,6 +5,8 @@ package com.yuan.hexgame.game;
  */
 public interface Game {
 
+    public void start();
+
     public void putPiece(int id);
 
     public boolean isAWin();

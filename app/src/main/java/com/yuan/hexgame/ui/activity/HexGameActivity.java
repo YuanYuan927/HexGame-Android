@@ -15,6 +15,7 @@ import android.view.WindowManager;
 
 import com.yuan.hexgame.R;
 import com.yuan.hexgame.game.Game;
+import com.yuan.hexgame.game.GameSettings;
 import com.yuan.hexgame.game.HexGame;
 import com.yuan.hexgame.game.Player;
 import com.yuan.hexgame.ui.dialog.GameResultDialogFragment;
@@ -40,6 +41,10 @@ public class HexGameActivity extends Activity
     private Game mGame;
 
     private HexView[] mHexViews;
+
+    private boolean isWindowFocusFirstTime = true;
+
+    private GameSettings mSettings = GameSettings.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,10 +97,18 @@ public class HexGameActivity extends Activity
             }
         }
 
-        mGame = new HexGame(CHESS_NUM, mHexViews);
+        mGame = new HexGame(this, CHESS_NUM, mHexViews);
         mGame.setOnGameOverListener(this);
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus && isWindowFocusFirstTime) {
+            mGame.start();
+            isWindowFocusFirstTime = false;
+        }
+    }
 
     private View.OnClickListener mHexChessOnClickListener = new View.OnClickListener() {
         @Override
@@ -156,7 +169,7 @@ public class HexGameActivity extends Activity
 
     @Override
     public void onShareResultClick() {
-
+        mGame.restart();
     }
 
     @Override

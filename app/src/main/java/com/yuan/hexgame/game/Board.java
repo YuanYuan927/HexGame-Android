@@ -7,6 +7,8 @@ public interface Board {
 
     public int getChessNum();
 
+    public int getBoardN();
+
     public void setOwner(int i, Player player);
 
     public Player getOwner(int i);

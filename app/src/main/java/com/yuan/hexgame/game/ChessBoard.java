@@ -45,6 +45,11 @@ public class ChessBoard implements Board {
     }
 
     @Override
+    public int getBoardN() {
+        return mN;
+    }
+
+    @Override
     public void setOwner(int i, Player player) {
         validate(i);
         if (mBoard[i] != null)

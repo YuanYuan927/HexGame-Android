@@ -1,7 +1,9 @@
 package com.yuan.hexgame.game;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
 
 import com.yuan.hexgame.ui.widget.HexView;
 import com.yuan.hexgame.util.LogUtil;
@@ -16,6 +18,9 @@ import java.util.List;
 public class HexGame implements Game {
 
     private static final String TAG = "HexGame";
+
+    private Context mContext;
+    private Handler mMainThreadHandler;
 
     private Board mBoard;
 
@@ -34,13 +39,30 @@ public class HexGame implements Game {
 
     private List<Integer> mOccupiedViewIds = new LinkedList<>();
 
-    public HexGame(int n, HexView[] hexViews) {
+    public HexGame(Context context, int n, HexView[] hexViews) {
+        mContext = context;
+        mMainThreadHandler = new Handler(context.getMainLooper());
         mBoard = new ChessBoard(n);
         mHexViews = hexViews;
         mSettings = GameSettings.getInstance();
         mCurrentPlayer = mSettings.getFirstPlayer();
         if (mSettings.getGameMode() == GameSettings.MODE_HUMAN_VS_ROBOT) {
-            mRobot = new MonteCarloRobot(mCurrentPlayer.component());
+            mRobot = new MonteCarloRobot(Player.B);
+        }
+    }
+
+    @Override
+    public void start() {
+        if (mSettings.getGameMode() == GameSettings.MODE_HUMAN_VS_ROBOT
+                && mSettings.getFirstPlayer() == Player.B) {
+            int num = mBoard.getChessNum();
+            int firstPos = 0;
+            if (num % 2 == 1) {
+                firstPos = num / 2 + 1;
+            } else {
+                firstPos = num / 2 + (int) Math.sqrt(num) / 2;
+            }
+            doPutPiece(firstPos);
         }
     }
 
@@ -62,6 +84,20 @@ public class HexGame implements Game {
 //            mHexViews[robotChessPos].setOwner(mCurrentPlayer);
 //            mCurrentPlayer = mCurrentPlayer.component();
             new RobotTask().execute();
+//            final long startT = System.currentTimeMillis();
+//            mRobot.compute(mBoard, new Robot.RobotStatusListener() {
+//                @Override
+//                public void onStart() {
+//
+//                }
+//
+//                @Override
+//                public void onCompleted(int optimalPos) {
+//                    doPutPiece(optimalPos);
+//                    long endT = System.currentTimeMillis();
+//                    LogUtil.i(TAG, "Robot cost " + (endT - startT) + "ms");
+//                }
+//            });
         }
     }
 
@@ -116,6 +152,14 @@ public class HexGame implements Game {
         mOccupiedViewIds.clear();
         isGameOver = false;
         mWinner = null;
+        mCurrentPlayer = mSettings.getFirstPlayer();
+        mMainThreadHandler.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                start();
+            }
+        }, mOccupiedViewIds.size() * 20 + 1000);
     }
 
     @Override
@@ -124,15 +168,20 @@ public class HexGame implements Game {
     }
 
     private class RobotTask extends AsyncTask<Void, Integer, Integer> {
+        private long startT;
+        private long endT;
 
         @Override
         protected Integer doInBackground(Void... params) {
+            startT = System.currentTimeMillis();
             return mRobot.getChessPos(mBoard);
         }
 
         @Override
         protected void onPostExecute(Integer id) {
             doPutPiece(id);
+            endT = System.currentTimeMillis();
+            LogUtil.i(TAG, "Robot cost " + (endT - startT) + "ms");
         }
     }
 

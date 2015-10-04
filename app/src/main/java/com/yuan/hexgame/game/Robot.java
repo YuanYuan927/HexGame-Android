@@ -11,4 +11,11 @@ public interface Robot {
      * @return
      */
     public int getChessPos(Board board);
+
+    public void compute(Board board, RobotStatusListener robotStatusListener);
+
+    public interface RobotStatusListener {
+        public void onStart();
+        public void onCompleted(int optimalPos);
+    }
 }
