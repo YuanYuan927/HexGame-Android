@@ -77,6 +77,13 @@ public class HexGame implements Game {
             }
             doPutPiece(firstPos);
         }
+        if (mCurrentPlayer == Player.A) {
+            mPlayerAAvatar.startAnimation(mAvatarAnim);
+            mPlayerBAvatar.clearAnimation();
+        } else {
+            mPlayerBAvatar.startAnimation(mAvatarAnim);
+            mPlayerAAvatar.clearAnimation();
+        }
     }
 
     @Override
@@ -134,6 +141,14 @@ public class HexGame implements Game {
                     mPlayerAAvatar.startAnimation(mAvatarAnim);
                 }
             });
+        } else if (mSettings.getGameMode() == GameSettings.MODE_HUMAN_VS_HUMAN && (!isGameOver)) {
+            if (mCurrentPlayer == Player.A) {
+                mPlayerAAvatar.startAnimation(mAvatarAnim);
+                mPlayerBAvatar.clearAnimation();
+            } else {
+                mPlayerBAvatar.startAnimation(mAvatarAnim);
+                mPlayerAAvatar.clearAnimation();
+            }
         }
     }
 
