@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">HexGame</string>
+    <string name="app_name">Hex Game</string>
     <string name="hello_world">Hello Hex Game!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Settings -->
+    <string name="settings_key_game_mode">settings_key_game_mode</string>
+    <string name="settings_title_game_mode">Game Mode</string>
+    <string-array name="settings_game_mode">
+        <item>Player VS Player</item>
+        <item>Player VS Robot</item>
+    </string-array>
+
+    <string name="settings_key_board_size">settings_key_board_size</string>
+
+    <string name="settings_key_first_player">settings_key_first_player</string>
+    <string name="settings_title_first_player">First Player</string>
+    <string-array name="settings_first_player">
+        <item>Player I</item>
+        <item>Player II</item>
+        <item>Random</item>
+    </string-array>
+
+    <string name="settings_title_version">Version</string>
+    <string name="settings_key_version">settings_key_version</string>
+    <!-- Settings End-->
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>

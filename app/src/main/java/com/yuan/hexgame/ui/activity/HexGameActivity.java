@@ -2,6 +2,7 @@ package com.yuan.hexgame.ui.activity;
 
 import android.app.Activity;
 import android.app.WallpaperManager;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -176,6 +177,7 @@ public class HexGameActivity extends Activity
         @Override
         public void onSettingsClick() {
             LogUtil.i(TAG, "Click Settings");
+            startActivity(new Intent(HexGameActivity.this, SettingsActivity.class));
         }
 
         @Override
