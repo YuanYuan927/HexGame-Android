@@ -13,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 
 import com.yuan.hexgame.R;
 import com.yuan.hexgame.game.Game;
@@ -43,6 +46,8 @@ public class HexGameActivity extends Activity
     private Game mGame;
 
     private HexView[] mHexViews;
+    private Avatar mAvatarA;
+    private Avatar mAvatarB;
 
     private boolean isWindowFocusFirstTime = true;
 
@@ -79,7 +84,7 @@ public class HexGameActivity extends Activity
         int xDelta = (int) (CHESS_SIZE * Math.sqrt(3));
         int yDelta = CHESS_SIZE * 3 / 2;
         int xOffset = xDelta / 2;
-        CHESS_NUM = 5; //(int) (mScreenHeight / (CHESS_SIZE * 1.7));
+        CHESS_NUM = 9; //(int) (mScreenHeight / (CHESS_SIZE * 1.7));
         int boardHeight = CHESS_NUM * CHESS_SIZE * 3 / 2 + CHESS_SIZE / 2;
         int boardWidth = xDelta * CHESS_NUM + xOffset * (CHESS_NUM - 1);
         int leftTopX = (mScreenWidth - boardWidth) / 2;
@@ -99,10 +104,10 @@ public class HexGameActivity extends Activity
             }
         }
 
-        mGame = new HexGame(this, CHESS_NUM, mHexViews);
-        mGame.setOnGameOverListener(this);
-
         initAvatar();
+
+        mGame = new HexGame(this, CHESS_NUM, mHexViews, mAvatarA, mAvatarB);
+        mGame.setOnGameOverListener(this);
     }
 
     private void initAvatar() {
@@ -114,20 +119,20 @@ public class HexGameActivity extends Activity
         } else {
             playerBAvatar = playerAAvatar;
         }
-        Avatar playerA = new Avatar(this, 120, res.getColor(R.color.indigo_500), playerAAvatar);
-        Avatar playerB = new Avatar(this, 120, res.getColor(R.color.pink_500), playerBAvatar);
+        mAvatarA = new Avatar(this, 120, res.getColor(R.color.indigo_500), playerAAvatar);
+        mAvatarB = new Avatar(this, 120, res.getColor(R.color.pink_500), playerBAvatar);
 
 //        playerA.setBackgroundDrawable(res.getDrawable(R.drawable.avatar_player));
 //        int gameMode = mSettings.getGameMode();
 //        int playerBDrawableId = gameMode == GameSettings.MODE_HUMAN_VS_ROBOT ? R.drawable.avatar_android : R.drawable.avatar_player;
 //        playerB.setBackgroundDrawable(res.getDrawable(playerBDrawableId));
 
-        playerA.setX(50);
-        playerA.setY(mScreenHeight - 50 - 120);
-        playerB.setX(mScreenWidth - 50 - 120);
-        playerB.setY(50);
-        mRootLayout.addView(playerA);
-        mRootLayout.addView(playerB);
+        mAvatarA.setX(50);
+        mAvatarA.setY(mScreenHeight - 50 - 120);
+        mAvatarB.setX(mScreenWidth - 50 - 120);
+        mAvatarB.setY(50);
+        mRootLayout.addView(mAvatarA);
+        mRootLayout.addView(mAvatarB);
     }
 
     @Override

@@ -1,10 +1,17 @@
 package com.yuan.hexgame.game;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
+import com.yuan.hexgame.R;
+import com.yuan.hexgame.ui.widget.Avatar;
 import com.yuan.hexgame.ui.widget.HexView;
 import com.yuan.hexgame.util.LogUtil;
 
@@ -31,6 +38,9 @@ public class HexGame implements Game {
     private Robot mRobot;
 
     private HexView[] mHexViews; // 1 ~ NxN
+    private Avatar mPlayerAAvatar;
+    private Avatar mPlayerBAvatar;
+    private Animation mAvatarAnim;
 
     private OnGameOverListener mOnGameOverListener;
 
@@ -39,16 +49,19 @@ public class HexGame implements Game {
 
     private List<Integer> mOccupiedViewIds = new LinkedList<>();
 
-    public HexGame(Context context, int n, HexView[] hexViews) {
+    public HexGame(Context context, int n, HexView[] hexViews, Avatar playerA, Avatar playerB) {
         mContext = context;
         mMainThreadHandler = new Handler(context.getMainLooper());
         mBoard = new ChessBoard(n);
         mHexViews = hexViews;
+        mPlayerAAvatar = playerA;
+        mPlayerBAvatar = playerB;
         mSettings = GameSettings.getInstance();
         mCurrentPlayer = mSettings.getFirstPlayer();
         if (mSettings.getGameMode() == GameSettings.MODE_HUMAN_VS_ROBOT) {
             mRobot = new MonteCarloRobot(Player.B);
         }
+        mAvatarAnim = AnimationUtils.loadAnimation(context, R.anim.avatar_breath);
     }
 
     @Override
@@ -88,7 +101,28 @@ public class HexGame implements Game {
             mRobot.compute(mBoard, new Robot.RobotStatusListener() {
                 @Override
                 public void onStart() {
+//                    Animator alphaDownAnim = ObjectAnimator.ofFloat(mPlayerBAvatar, "alpha", 1f, 0.5f);
+//                    alphaDownAnim.setDuration(500);
+//                    Animator alphaUpAnim = ObjectAnimator.ofFloat(mPlayerBAvatar, "alpha", 0.5f, 1f);
+//                    alphaUpAnim.setDuration(500);
+//                    Animator sizeLargeAnim = ObjectAnimator.ofInt(mPlayerBAvatar, "diameter", 120, 150);
+//                    sizeLargeAnim.setDuration(500);
+//                    Animator sizeSmallAnim = ObjectAnimator.ofInt(mPlayerBAvatar, "diameter", 150, 120);
+//                    sizeSmallAnim.setDuration(500);
+//                    AnimatorSet breadth = new AnimatorSet();
+//                    breadth.play(alphaDownAnim).with(sizeLargeAnim);
+//                    breadth.play(alphaUpAnim).with(sizeSmallAnim);
+//                    breadth.play(alphaDownAnim).before(alphaUpAnim);
+//                    breadth.start();
 
+//                    AlphaAnimation alphaAnim = new AlphaAnimation(1f, 0.4f);
+//                    alphaAnim.setDuration(500);
+//                    alphaAnim.setRepeatCount(Animation.INFINITE);
+//                    alphaAnim.setRepeatMode(Animation.REVERSE);
+//                    mPlayerBAvatar.startAnimation(alphaAnim);
+
+                    mPlayerAAvatar.clearAnimation();
+                    mPlayerBAvatar.startAnimation(mAvatarAnim);
                 }
 
                 @Override
@@ -96,6 +130,8 @@ public class HexGame implements Game {
                     doPutPiece(optimalPos);
                     long endT = System.currentTimeMillis();
                     LogUtil.i(TAG, "Robot cost " + (endT - startT) + "ms");
+                    mPlayerBAvatar.clearAnimation();
+                    mPlayerAAvatar.startAnimation(mAvatarAnim);
                 }
             });
         }

@@ -59,6 +59,13 @@ public class Avatar extends View {
     }
 
     @Override
+    public void setBackgroundColor(int color) {
+        mColor = color;
+        mFillPaint.setColor(mColor);
+        invalidate();
+    }
+
+    @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(mDiameter, mDiameter);
     }
