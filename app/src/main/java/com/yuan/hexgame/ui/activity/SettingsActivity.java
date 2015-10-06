@@ -1,18 +1,13 @@
 package com.yuan.hexgame.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 
-import com.yuan.hexgame.BuildConfig;
 import com.yuan.hexgame.R;
-import com.yuan.hexgame.ui.fragment.SettingsFragment;
 import com.yuan.hexgame.util.LogUtil;
 
 /**
@@ -45,6 +40,7 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             public void onClick(View v) {
                 LogUtil.i(TAG, "Click Back");
+                startActivity(new Intent(SettingsActivity.this, HexGameActivity.class));
                 finish();
             }
         });

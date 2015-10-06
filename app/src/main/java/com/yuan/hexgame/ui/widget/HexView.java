@@ -31,12 +31,13 @@ public class HexView extends View implements HexChess {
     private Paint mStrokePaint;
     private Paint mFillPaint;
 
-    private static Path sPath;
+    private Path mPath;
 
     public HexView(Context context, int size) {
         super(context);
         mSize = size;
         initPaint();
+        initPath();
         setDrawingCacheEnabled(true);
     }
 
@@ -108,12 +109,8 @@ public class HexView extends View implements HexChess {
      */
     @Override
     protected void onDraw(Canvas canvas) {
-        if (sPath == null) {
-            sPath = createPath(getMeasuredWidth(), getMeasuredHeight());
-        }
-
-        canvas.drawPath(sPath, mFillPaint);
-        canvas.drawPath(sPath, mStrokePaint);
+        canvas.drawPath(mPath, mFillPaint);
+        canvas.drawPath(mPath, mStrokePaint);
     }
 
     @Override
@@ -144,8 +141,9 @@ public class HexView extends View implements HexChess {
         invalidate();
     }
 
-    private Path createPath(int measuredWidth, int measuredHeight) {
-        Path path = new Path();
+    private void initPath() {
+        int measuredWidth = (int) ((mSize * SQRT_3));
+        int measuredHeight = 2 * mSize;
         int x0 = measuredWidth / 2;
         int y0 = (int) (STROKE_SIZE * 2 / SQRT_3);
 
@@ -164,13 +162,13 @@ public class HexView extends View implements HexChess {
         int x5 = x4;
         int y5 = y1;
 
-        path.moveTo(x0, y0);
-        path.lineTo(x1, y1);
-        path.lineTo(x2, y2);
-        path.lineTo(x3, y3);
-        path.lineTo(x4, y4);
-        path.lineTo(x5, y5);
-        path.close();
-        return path;
+        mPath = new Path();
+        mPath.moveTo(x0, y0);
+        mPath.lineTo(x1, y1);
+        mPath.lineTo(x2, y2);
+        mPath.lineTo(x3, y3);
+        mPath.lineTo(x4, y4);
+        mPath.lineTo(x5, y5);
+        mPath.close();
     }
 }

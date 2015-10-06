@@ -41,9 +41,6 @@ public class HexGameActivity extends Activity
 
     private MenuBar mMenuBar;
 
-    private int mScreenWidth;
-    private int mScreenHeight;
-
     private Game mGame;
 
     private HexView[] mHexViews;
@@ -72,31 +69,46 @@ public class HexGameActivity extends Activity
         Bitmap bmp = blur(((BitmapDrawable) systemBackground).getBitmap());
         mBackground.setBackgroundDrawable(new BitmapDrawable(getResources(), bmp));
 
-        // Get the screen size
-        DisplayMetrics dm = getResources().getDisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        LogUtil.i(TAG, "width=" + dm.widthPixels + " height=" + dm.heightPixels);
-        mScreenWidth = dm.widthPixels;
-        mScreenHeight = dm.heightPixels;
-
         // Draw the chess board
-        int CHESS_SIZE = 70;
-        int CHESS_NUM = 9;
-        int xDelta = (int) (CHESS_SIZE * Math.sqrt(3));
-        int yDelta = CHESS_SIZE * 3 / 2;
+        initChessBoard();
+
+        initAvatar();
+
+        int boardN = GameSettings.getInstance().getBoardN();
+        mGame = new HexGame(this, boardN, mHexViews, mAvatarA, mAvatarB);
+        mGame.setOnGameOverListener(this);
+    }
+
+    private void initChessBoard() {
+        GameSettings settings = GameSettings.getInstance();
+        int boardN = settings.getBoardN();
+        if (boardN < GameSettings.CHESS_BOARD_N_MIN) {
+            boardN = settings.getBoardNMax();
+        }
+        int paddingTop = GameSettings.getInstance().getBoardPaddingTop();
+
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        int screenHeight = dm.heightPixels;
+        int screenWidth = dm.widthPixels;
+
+        int chessSize = (screenHeight - 2 * paddingTop) * 2 / (3 * boardN + 1);
+
+        int xDelta = (int) (chessSize * Math.sqrt(3));
+        int yDelta = chessSize * 3 / 2;
         int xOffset = xDelta / 2;
-        CHESS_NUM = 9; //(int) (mScreenHeight / (CHESS_SIZE * 1.7));
-        int boardHeight = CHESS_NUM * CHESS_SIZE * 3 / 2 + CHESS_SIZE / 2;
-        int boardWidth = xDelta * CHESS_NUM + xOffset * (CHESS_NUM - 1);
-        int leftTopX = (mScreenWidth - boardWidth) / 2;
-        int leftTopY = (mScreenHeight - boardHeight) / 2;
-        mHexViews = new HexView[CHESS_NUM * CHESS_NUM + 1];
-        for (int i = 1; i <= CHESS_NUM; i++) {
-            for (int j = 1; j <= CHESS_NUM; j++) {
+
+        int boardWidth = xDelta * boardN + xOffset * (boardN - 1);
+
+        int leftTopX = (screenWidth - boardWidth) / 2;
+        int leftTopY = paddingTop;
+
+        mHexViews = new HexView[boardN * boardN + 1];
+        for (int i = 1; i <= boardN; i++) {
+            for (int j = 1; j <= boardN; j++) {
                 int x = leftTopX + (j - 1) * xDelta + (i - 1) * xOffset;
                 int y = leftTopY + (i - 1) * yDelta;
-                int id = (i - 1) * CHESS_NUM + j;
-                mHexViews[id] = new HexView(this, CHESS_SIZE);
+                int id = (i - 1) * boardN + j;
+                mHexViews[id] = new HexView(this, chessSize);
                 mHexViews[id].setX(x);
                 mHexViews[id].setY(y);
                 mHexViews[id].setTag(id);
@@ -104,11 +116,6 @@ public class HexGameActivity extends Activity
                 mRootLayout.addView(mHexViews[id]);
             }
         }
-
-        initAvatar();
-
-        mGame = new HexGame(this, CHESS_NUM, mHexViews, mAvatarA, mAvatarB);
-        mGame.setOnGameOverListener(this);
     }
 
     private void initAvatar() {
@@ -128,10 +135,12 @@ public class HexGameActivity extends Activity
 //        int playerBDrawableId = gameMode == GameSettings.MODE_HUMAN_VS_ROBOT ? R.drawable.avatar_android : R.drawable.avatar_player;
 //        playerB.setBackgroundDrawable(res.getDrawable(playerBDrawableId));
 
-        mAvatarA.setX(50);
-        mAvatarA.setY(mScreenHeight - 50 - 120);
-        mAvatarB.setX(mScreenWidth - 50 - 120);
-        mAvatarB.setY(50);
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        int padding = GameSettings.getInstance().getBoardPaddingTop();
+        mAvatarA.setX(padding);
+        mAvatarA.setY(dm.heightPixels - padding - 120);
+        mAvatarB.setX(dm.widthPixels - padding - 120);
+        mAvatarB.setY(padding);
         mRootLayout.addView(mAvatarA);
         mRootLayout.addView(mAvatarB);
     }
@@ -178,6 +187,7 @@ public class HexGameActivity extends Activity
         public void onSettingsClick() {
             LogUtil.i(TAG, "Click Settings");
             startActivity(new Intent(HexGameActivity.this, SettingsActivity.class));
+            finish();
         }
 
         @Override

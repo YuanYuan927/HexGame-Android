@@ -7,12 +7,14 @@ import android.preference.PreferenceFragment;
 
 import com.yuan.hexgame.BuildConfig;
 import com.yuan.hexgame.R;
+import com.yuan.hexgame.game.GameSettings;
 
 /**
  * Created by Yuan Sun on 2015/10/5.
  */
 public class SettingsFragment extends PreferenceFragment {
 
+    private ListPreference mBoardSize;
     private ListPreference mGameMode;
     private Preference mVersion;
 
@@ -21,8 +23,23 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
 
+        mBoardSize = (ListPreference) findPreference(getString(R.string.settings_key_board_size));
+        int boardNMax = GameSettings.getInstance().getBoardNMax();
+        int entryNum = boardNMax - GameSettings.CHESS_BOARD_N_MIN + 1;
+        String[] entries = new String[entryNum];
+        String[] entryValues = new String[entryNum];
+        for (int i = 0; i < entryNum; i++) {
+            int size = GameSettings.CHESS_BOARD_N_MIN + entryNum - 1 - i;
+            entries[i] = size + " X " + size;
+            entryValues[i] = String.valueOf(size);
+        }
+        mBoardSize.setEntries(entries);
+        mBoardSize.setEntryValues(entryValues);
+        mBoardSize.setSummary(mBoardSize.getEntry());
+        mBoardSize.setOnPreferenceChangeListener(mOnPreferenceChangeListener);
+
         mGameMode = (ListPreference) findPreference(getString(R.string.settings_key_game_mode));
-        mGameMode.setSummary(mGameMode.getValue());
+        mGameMode.setSummary(mGameMode.getEntry());
         mGameMode.setOnPreferenceChangeListener(mOnPreferenceChangeListener);
 
         mVersion = findPreference(getString(R.string.settings_key_version));
@@ -32,8 +49,12 @@ public class SettingsFragment extends PreferenceFragment {
     Preference.OnPreferenceChangeListener mOnPreferenceChangeListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            if (preference.getKey().equals(getString(R.string.settings_key_game_mode))) {
-                mGameMode.setSummary((String) newValue);
+            if (preference.getKey().equals(getString(R.string.settings_key_board_size))) {
+                mBoardSize.setValue((String) newValue);
+                mBoardSize.setSummary(mBoardSize.getEntry());
+            } else if (preference.getKey().equals(getString(R.string.settings_key_game_mode))) {
+                mGameMode.setValue((String) newValue);
+                mGameMode.setSummary(mGameMode.getEntry());
             }
             return true;
         }

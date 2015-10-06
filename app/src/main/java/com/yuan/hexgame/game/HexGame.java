@@ -61,7 +61,10 @@ public class HexGame implements Game {
         if (mSettings.getGameMode() == GameSettings.MODE_HUMAN_VS_ROBOT) {
             mRobot = new MonteCarloRobot(Player.B);
         }
-        mAvatarAnim = AnimationUtils.loadAnimation(context, R.anim.avatar_breath);
+        mAvatarAnim = new AlphaAnimation(1f, 0.4f);//AnimationUtils.loadAnimation(context, R.anim.avatar_breath);
+        mAvatarAnim.setDuration(2000);
+        mAvatarAnim.setRepeatMode(Animation.REVERSE);
+        mAvatarAnim.setRepeatCount(Animation.INFINITE);
     }
 
     @Override
@@ -219,6 +222,7 @@ public class HexGame implements Game {
     }
 
     private class RobotTask extends AsyncTask<Void, Integer, Integer> {
+
         private long startT;
         private long endT;
 
