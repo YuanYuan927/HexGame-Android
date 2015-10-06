@@ -84,6 +84,7 @@ public class HexGameActivity extends Activity
         int boardN = settings.getBoardN();
         if (boardN < GameSettings.CHESS_BOARD_N_MIN) {
             boardN = settings.getBoardNMax();
+            settings.setBoardN(boardN);
         }
         int paddingTop = GameSettings.getInstance().getBoardPaddingTop();
 
