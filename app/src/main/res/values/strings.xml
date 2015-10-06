@@ -23,6 +23,9 @@
         <item>Random</item>
     </string-array>
 
+    <string name="settings_key_color">settings_key_color</string>
+    <string name="settings_title_color">Color</string>
+
     <string name="settings_title_version">Version</string>
     <string name="settings_key_version">settings_key_version</string>
     <!-- Settings End-->

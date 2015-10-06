@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/iv_red"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="20dp"
+            android:background="#FF0000"/>
+
+        <ImageView
+            android:id="@+id/iv_red_check"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@id/iv_red"
+            android:src="@drawable/check"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/iv_orange"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/iv_red"
+            android:layout_marginRight="20dp"
+            android:background="#FF7F27"/>
+
+        <ImageView
+            android:id="@+id/iv_orange_check"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@id/iv_orange"
+            android:src="@drawable/check"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/iv_yellow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@id/iv_orange"
+            android:layout_marginRight="20dp"
+            android:background="#FFFF00"/>
+
+        <ImageView
+            android:id="@+id/iv_yellow_check"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@id/iv_yellow"
+            android:src="@drawable/check"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/iv_green"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@id/iv_yellow"
+            android:layout_marginRight="20dp"
+            android:background="#00FF00"/>
+
+        <ImageView
+            android:id="@+id/iv_green_check"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@id/iv_green"
+            android:src="@drawable/check"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/iv_cyan"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@id/iv_green"
+            android:layout_marginRight="20dp"
+            android:background="#00FFFF"/>
+
+        <ImageView
+            android:id="@+id/iv_cyan_check"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@id/iv_cyan"
+            android:src="@drawable/check"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/iv_blue"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@id/iv_cyan"
+            android:layout_marginRight="20dp"
+            android:background="#0000FF"/>
+
+        <ImageView
+            android:id="@+id/iv_blue_check"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@id/iv_blue"
+            android:src="@drawable/check"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/iv_purple"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@id/iv_blue"
+            android:layout_marginRight="20dp"
+            android:background="#7F00FF"/>
+
+        <ImageView
+            android:id="@+id/iv_purple_check"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@id/iv_purple"
+            android:src="@drawable/check"
+            android:visibility="invisible"/>
+    </RelativeLayout>
+
+</RelativeLayout>

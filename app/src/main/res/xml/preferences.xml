@@ -6,22 +6,26 @@
         android:key="@string/settings_key_board_size"
         android:entries="@array/settings_game_mode"
         android:entryValues="@array/settings_game_mode"
-        android:defaultValue="Player VS Player" />
+        android:defaultValue="Player VS Player"/>
     <ListPreference
         android:title="@string/settings_title_game_mode"
         android:dialogTitle="@string/settings_title_game_mode"
         android:key="@string/settings_key_game_mode"
         android:entries="@array/settings_game_mode"
         android:entryValues="@array/settings_game_mode"
-        android:defaultValue="Player VS Player" />
+        android:defaultValue="Player VS Player"/>
     <ListPreference
         android:title="@string/settings_title_first_player"
         android:dialogTitle="@string/settings_title_first_player"
         android:key="@string/settings_key_first_player"
         android:entries="@array/settings_first_player"
         android:entryValues="@array/settings_first_player"
-        android:defaultValue="Player I" />
+        android:defaultValue="Player I"/>
+    <com.yuan.hexgame.ui.preference.ColorSelectorPreference
+        android:title="@string/settings_title_color"
+        android:dialogTitle="@string/settings_title_color"
+        android:key="@string/settings_key_color"/>
     <Preference
         android:title="@string/settings_title_version"
-        android:key="@string/settings_key_version" />
+        android:key="@string/settings_key_version"/>
 </PreferenceScreen>
