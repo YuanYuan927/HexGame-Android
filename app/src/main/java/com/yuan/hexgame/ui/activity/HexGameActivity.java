@@ -18,6 +18,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.analytics.game.UMGameAgent;
 import com.yuan.hexgame.R;
 import com.yuan.hexgame.game.Game;
 import com.yuan.hexgame.game.GameSettings;
@@ -54,6 +56,10 @@ public class HexGameActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        UMGameAgent.setDebugMode(true);
+        UMGameAgent.init(this);
+        MobclickAgent.updateOnlineConfig(this);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_hex_game);
@@ -77,6 +83,18 @@ public class HexGameActivity extends Activity
         int boardN = GameSettings.getInstance().getBoardN();
         mGame = new HexGame(this, boardN, mHexViews, mAvatarA, mAvatarB);
         mGame.setOnGameOverListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UMGameAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        UMGameAgent.onPause(this);
     }
 
     private void initChessBoard() {
