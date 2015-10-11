@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_dialog_background">
+
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="140dp">
+
+        <RelativeLayout
+            android:id="@+id/rl_wizard_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp">
+
+            <RelativeLayout
+                android:id="@+id/rl_wizard_num"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignBottom="@+id/tv_wizard_title"
+                android:layout_alignTop="@+id/tv_wizard_title">
+
+                <ImageView
+                    android:id="@+id/iv_wizard_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="1dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/wizard_num_red_500"/>
+
+                <TextView
+                    android:id="@+id/tv_wizard_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="1"
+                    android:textColor="@color/gray_100"
+                    android:textSize="12sp"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_wizard_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@id/rl_wizard_num"
+                android:text="Game Rule"
+                android:textColor="@color/gray_900"
+                android:textSize="15sp"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_wizard_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_wizard_title"
+            android:layout_margin="15dp"
+            android:lineSpacingExtra="3dp"
+            android:text="Welcome to Hex Game! Welcome to Hex Game! Welcome to Hex Game! Welcome to Hex Game!"
+            android:textColor="@color/gray_800"
+            android:textSize="12sp"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:id="@+id/tv_previous"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:background="@drawable/selector_dialog_button"
+                android:clickable="true"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/game_wizard_previous"
+                android:textColor="@color/teal_500"
+                android:textSize="10sp"/>
+
+            <TextView
+                android:id="@+id/tv_next"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/tv_previous"
+                android:background="@drawable/selector_dialog_button"
+                android:clickable="true"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/game_wizard_next"
+                android:textColor="@color/teal_500"
+                android:textSize="10sp"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

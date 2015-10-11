@@ -39,9 +39,25 @@
     <string name="settings_key_version">settings_key_version</string>
     <!-- Settings End-->
 
-    <string name="title_activity_fullscreen">FullscreenActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="title_activity_main">MainActivity</string>
+    <!-- Game Wizard Start -->
+    <string name="game_wizard_1_title">Welcome</string>
+    <string name="game_wizard_1_msg">Let\'s go to learn how to play it!</string>
+    <string name="game_wizard_2_title">Blue Win</string>
+    <string name="game_wizard_2_msg">If blue pieces connect the <b>LEFT</b> to <b>RIGHT</b>, the blue player wins.</string>
+    <string name="game_wizard_3_title">Red Win</string>
+    <string name="game_wizard_3_msg">If red pieces connect the <b>UP</b> to <b>BOTTOM</b>, the red player wins. </string>
+    <string name="game_wizard_4_title">Game Menu</string>
+    <string name="game_wizard_4_msg">Click the avatar to show the menu.</string>
+    <string name="game_wizard_5_title">Settings</string>
+    <string name="game_wizard_5_msg">You can set the board size, the game mode, etc.</string>
+    <string name="game_wizard_6_title">Share</string>
+    <string name="game_wizard_6_msg">Share the awesome game to your friends.</string>
+    <string name="game_wizard_7_title">Help</string>
+    <string name="game_wizard_7_msg">Watch the game wizard.</string>
+    <string name="game_wizard_next">NEXY</string>
+    <string name="game_wizard_previous">PREVIOUS</string>
+    <string name="game_wizard_go">GO</string>
+    <string name="game_wizard_start_to_play">PLAY</string>
+    <!-- Game Wizard End -->
 
 </resources>

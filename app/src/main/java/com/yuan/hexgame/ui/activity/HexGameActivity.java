@@ -14,15 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
 
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.analytics.game.UMGameAgent;
 import com.yuan.hexgame.R;
 import com.yuan.hexgame.game.Game;
 import com.yuan.hexgame.game.GameSettings;
+import com.yuan.hexgame.game.GameWizard;
 import com.yuan.hexgame.game.HexGame;
 import com.yuan.hexgame.game.Player;
 import com.yuan.hexgame.ui.dialog.GameResultDialogFragment;
@@ -37,10 +35,11 @@ public class HexGameActivity extends Activity
         implements GameResultDialogFragment.GameResultDialogListener, Game.OnGameOverListener {
 
     private static final String TAG = "HexGameActivity";
+    private static final int AVATAR_SIZE_DP = 60;
 
     private ViewGroup mBackground;
     private ViewGroup mRootLayout;
-
+    private View mEmptyAnchor;
     private MenuBar mMenuBar;
 
     private Game mGame;
@@ -48,10 +47,14 @@ public class HexGameActivity extends Activity
     private HexView[] mHexViews;
     private Avatar mAvatarA;
     private Avatar mAvatarB;
+    private int mAvatarAX;
+    private int mAvatarAY;
 
     private boolean isWindowFocusFirstTime = true;
 
     private GameSettings mSettings = GameSettings.getInstance();
+
+    private GameWizard mGameWizard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,8 @@ public class HexGameActivity extends Activity
         int boardN = GameSettings.getInstance().getBoardN();
         mGame = new HexGame(this, boardN, mHexViews, mAvatarA, mAvatarB);
         mGame.setOnGameOverListener(this);
+
+
     }
 
     @Override
@@ -146,22 +151,97 @@ public class HexGameActivity extends Activity
         } else {
             playerBAvatar = playerAAvatar;
         }
-        mAvatarA = new Avatar(this, 120, res.getColor(R.color.indigo_500), playerAAvatar);
-        mAvatarB = new Avatar(this, 120, res.getColor(R.color.pink_500), playerBAvatar);
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        int avatarSize = (int) (AVATAR_SIZE_DP * dm.density);
+        mAvatarA = new Avatar(this, avatarSize, res.getColor(R.color.indigo_500), playerAAvatar);
+        mAvatarB = new Avatar(this, avatarSize, res.getColor(R.color.pink_500), playerBAvatar);
 
 //        playerA.setBackgroundDrawable(res.getDrawable(R.drawable.avatar_player));
 //        int gameMode = mSettings.getGameMode();
 //        int playerBDrawableId = gameMode == GameSettings.MODE_HUMAN_VS_ROBOT ? R.drawable.avatar_android : R.drawable.avatar_player;
 //        playerB.setBackgroundDrawable(res.getDrawable(playerBDrawableId));
 
-        DisplayMetrics dm = getResources().getDisplayMetrics();
+
         int padding = GameSettings.getInstance().getBoardPaddingTop();
-        mAvatarA.setX(padding);
-        mAvatarA.setY(dm.heightPixels - padding - 120);
-        mAvatarB.setX(dm.widthPixels - padding - 120);
+//        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(padding, dm.heightPixels - padding - 120);
+//        mAvatarA.setLayoutParams(layoutParams);
+        mAvatarAX = padding;
+        mAvatarAY = dm.heightPixels - padding - avatarSize;
+        mAvatarA.setX(mAvatarAX);
+        mAvatarA.setY(mAvatarAY);
+        mAvatarB.setX(dm.widthPixels - padding - avatarSize);
         mAvatarB.setY(padding);
         mRootLayout.addView(mAvatarA);
         mRootLayout.addView(mAvatarB);
+        mAvatarA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMenuBar.setVisibility(mMenuBar.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
+            }
+        });
+    }
+
+    private void initGameWizard() {
+        mGameWizard = new GameWizard(this);
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        int screenHeight = dm.heightPixels;
+        int screenWidth = dm.widthPixels;
+        int menuWizardX = (int) (screenWidth - (48 + 250 + 10) * dm.density);
+        int menuWizardY = (int) (20 * dm.density);
+        int menuWizardYDelta = (int) (48 * dm.density);
+        mGameWizard.addWizardPopupWindow(R.string.game_wizard_1_title, R.string.game_wizard_1_msg, -1, -1);
+        mGameWizard.addWizardPopupWindow(R.string.game_wizard_2_title, R.string.game_wizard_2_msg, (int) (200 * dm.density), screenHeight / 2);
+        mGameWizard.addWizardPopupWindow(R.string.game_wizard_3_title, R.string.game_wizard_3_msg, menuWizardX, menuWizardY);
+        mGameWizard.addWizardPopupWindow(R.string.game_wizard_4_title, R.string.game_wizard_4_msg, (int) (mAvatarAX + AVATAR_SIZE_DP * dm.density), (int) (mAvatarAY - 140 * dm.density));
+        mGameWizard.addWizardPopupWindow(R.string.game_wizard_5_title, R.string.game_wizard_5_msg, menuWizardX, menuWizardY);
+        mGameWizard.addWizardPopupWindow(R.string.game_wizard_6_title, R.string.game_wizard_6_msg, menuWizardX, menuWizardY + menuWizardYDelta);
+        mGameWizard.addWizardPopupWindow(R.string.game_wizard_7_title, R.string.game_wizard_7_msg, menuWizardX, menuWizardY + 2 * menuWizardYDelta, true);
+        mGameWizard.show();
+        mGameWizard.setGameWizardListener(new GameWizard.GameWizardListener() {
+            @Override
+            public void onWizardShow(int id, boolean isLast) {
+                switch(id) {
+                    case 1:
+                        break;
+                    case 2:
+                        showPlayerAWinWizard();
+                        break;
+                    case 3:
+                        showPlayerBWinWizard();
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onWizardOver() {
+            }
+        });
+    }
+
+    private void showPlayerAWinWizard() {
+        int boardN = mSettings.getBoardN();
+        int row = boardN / 2 - 1;
+        int start = (row - 1) * boardN + 1;
+        int end = start + boardN - 1;
+        for (int i = start; i <= end; i++) {
+            mHexViews[i].setOwner(Player.A);
+        }
+    }
+
+    private void showPlayerBWinWizard() {
+        int boardN = mSettings.getBoardN();
+        int col = boardN / 2 - 1;
+        for (int i = 0; i < boardN; i++) {
+            mHexViews[col + i * boardN].setOwner(Player.B);
+        }
     }
 
     @Override
@@ -212,6 +292,7 @@ public class HexGameActivity extends Activity
         @Override
         public void onShareClick() {
             LogUtil.i(TAG, "Click Share");
+            initGameWizard();
         }
     };
 

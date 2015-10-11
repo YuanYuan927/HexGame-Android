@@ -8,20 +8,50 @@
 
     <color name="gray_50">#fafafa</color>
     <color name="gray_100">#f5f5f5</color>
+    <color name="gray_200">#eeeeee</color>
+    <color name="gray_300">#e0e0e0</color>
+    <color name="gray_400">#bdbdbd</color>
+    <color name="gray_700">#616161</color>
+    <color name="gray_800">#424242</color>
+    <color name="gray_900">#212121</color>
 
-    <color name="red_500">#e51c23</color>
+    <color name="red_500">#e51c23</color><!-- 229 28 35 -->
 
-    <color name="pink_500">#e91e63</color>
+    <color name="pink_500">#e91e63</color><!-- 233 30 99 -->
 
-    <color name="purple_500">#e51c23</color>
+    <color name="purple_500">#9c27b0</color><!-- 156 39 176 -->
 
-    <color name="deep_purple_500">#673ab7</color>
+    <color name="deep_purple_500">#673ab7</color><!-- 103 58 183 -->
 
-    <color name="indigo_500_dark">#3f51a5</color>
-    <color name="indigo_500">#3f51b5</color>
+    <color name="indigo_600">#3949ab</color><!-- 57 73 171 -->
+    <color name="indigo_500">#3f51b5</color><!-- 63 81 181 -->
 
 
-    <color name="blue_500">#5677fc</color>
+    <color name="blue_500">#5677fc</color><!-- 86 119 252 -->
+
+    <color name="light_blue_500">#03a9f4</color><!-- 3 169 244 -->
+
+    <color name="cyan_500">#00bcd4</color><!-- 0 188 212 -->
+
+    <color name="teal_500">#009688</color><!-- 0 150 136 -->
+
+    <color name="green_500">#259b24</color><!-- 37 155 36 -->
+
+    <color name="light_green_500">#8bc34a</color><!-- 139 195 74 -->
+
+    <color name="lime_500">#cddc39</color><!-- 205 220 57 -->
+
+    <color name="yellow_500">#ffeb3b</color><!-- 255 235 59 -->
+
+    <color name="amber_500">#ffc107</color><!-- 255 193 7 -->
+
+    <color name="orange_500">#ff9800</color><!-- 255 152 0 -->
+
+    <color name="deep_orange_500">#ff5722</color><!-- 255 87 34 -->
+
+    <color name="brown_500">#795548</color><!-- 121 85 72 -->
+
+    <color name="blue_grey_500">#607d8b</color><!-- 96 125 139 -->
 
     <color name="red">#FF0000</color>
     <color name="orange">#FF7F27</color>
@@ -30,11 +60,5 @@
     <color name="cyan">#00FFFF</color>
     <color name="blue">#0000FF</color>
     <color name="purple">#7F00FF</color>
-
-
-
-
-
-
 
 </resources>

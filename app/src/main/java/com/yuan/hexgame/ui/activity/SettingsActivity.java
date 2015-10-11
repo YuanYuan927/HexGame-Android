@@ -29,7 +29,7 @@ public class SettingsActivity extends PreferenceActivity {
         mIvBack.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                mIvBackBackground.setBackgroundColor(getResources().getColor(R.color.indigo_500_dark));
+                mIvBackBackground.setBackgroundColor(getResources().getColor(R.color.indigo_600));
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     mIvBackBackground.setBackgroundColor(getResources().getColor(R.color.indigo_500));
                 }
