@@ -40,11 +40,14 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             public void onClick(View v) {
                 LogUtil.i(TAG, "Click Back");
-                startActivity(new Intent(SettingsActivity.this, HexGameActivity.class));
-                finish();
+                onBackPressed();
             }
         });
     }
 
-
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(SettingsActivity.this, HexGameActivity.class));
+        finish();
+    }
 }
