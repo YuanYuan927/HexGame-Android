@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">六角星棋</string>
+
+    <!-- Settings -->
+    <string name="settings_screen_title">游戏设置</string>
+    <string name="settings_key_board_size">settings_key_board_size</string>
+    <string name="settings_title_board_size">棋盘大小</string>
+
+    <string name="settings_key_game_mode">settings_key_game_mode</string>
+    <string name="settings_title_game_mode">游戏模式</string>
+    <string-array name="settings_game_mode">
+        <item>玩家 VS 电脑</item>
+        <item>玩家 VS 玩家</item>
+    </string-array>
+    <string-array name="settings_game_mode_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string name="settings_key_first_player">settings_key_first_player</string>
+    <string name="settings_title_first_player">先下玩家</string>
+    <string-array name="settings_first_player">
+        <item>玩家 I</item>
+        <item>玩家 II</item>
+        <item>随机</item>
+    </string-array>
+    <string-array name="settings_first_player_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string name="settings_key_color">settings_key_color</string>
+    <string name="settings_title_color">棋子颜色</string>
+
+    <string name="settings_title_version">版本</string>
+    <string name="settings_key_version">settings_key_version</string>
+    <!-- Settings End-->
+
+    <!-- Game Wizard Start -->
+    <string name="game_wizard_1_title">欢迎</string>
+    <string name="game_wizard_1_msg">让我们一起了解六角星棋游戏规则吧！</string>
+    <string name="game_wizard_2_title">蓝方获胜</string>
+    <string name="game_wizard_2_msg">如果蓝色棋子将棋盘<b>左右</b>边界连接起来，则蓝方获胜。</string>
+    <string name="game_wizard_3_title">红方获胜</string>
+    <string name="game_wizard_3_msg">如果红色棋子将棋盘<b>上下</b>边界连接起来，则红方获胜。 </string>
+    <string name="game_wizard_4_title">游戏菜单</string>
+    <string name="game_wizard_4_msg">点击头像显示游戏菜单</string>
+    <string name="game_wizard_5_title">游戏设置</string>
+    <string name="game_wizard_5_msg">你可以设置棋盘大小，游戏模式，先下玩家等</string>
+    <string name="game_wizard_6_title">分享</string>
+    <string name="game_wizard_6_msg">将好玩的六角星棋分享给你的小伙伴们吧！</string>
+    <string name="game_wizard_7_title">帮助</string>
+    <string name="game_wizard_7_msg">重新观看游戏向导。</string>
+    <string name="game_wizard_next">下一步</string>
+    <string name="game_wizard_previous">上一步</string>
+    <string name="game_wizard_go">游戏介绍</string>
+    <string name="game_wizard_start_to_play">完成</string>
+    <!-- Game Wizard End -->
+
+</resources>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
-        android:title="Board Size"
-        android:dialogTitle="Board Size"
+        android:title="@string/settings_title_board_size"
+        android:dialogTitle="@string/settings_title_board_size"
         android:key="@string/settings_key_board_size"
         android:entries="@array/settings_game_mode"
         android:entryValues="@array/settings_game_mode"
