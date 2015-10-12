@@ -132,7 +132,7 @@ public class HexGameActivity extends Activity
                 int x = leftTopX + (j - 1) * xDelta + (i - 1) * xOffset;
                 int y = leftTopY + (i - 1) * yDelta;
                 int id = (i - 1) * boardN + j;
-                mHexViews[id] = new HexView(this, chessSize);
+                mHexViews[id] = new HexView(this, chessSize, HexView.type(boardN, id));
                 mHexViews[id].setX(x);
                 mHexViews[id].setY(y);
                 mHexViews[id].setTag(id);

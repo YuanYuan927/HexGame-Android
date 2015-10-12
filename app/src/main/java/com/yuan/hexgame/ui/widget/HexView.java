@@ -19,23 +19,39 @@ import com.yuan.hexgame.game.Player;
  */
 public class HexView extends View implements HexChess {
 
+    public static final int BOARD_CENTER = 0x0;
+    public static final int BOARD_TOP = 0x1;
+    public static final int BOARD_BOTTOM= 0x2;
+    public static final int BOARD_LEFT = 0x4;
+    public static final int BOARD_RIGHT = 0x8;
+
     public static final int STROKE_SIZE = 1;
     private static final double SQRT_3 = Math.sqrt(3);
     private static final int PAINT_FILL_INIT_COLOR = 0x01010101;
     private static final int PAINT_FILL_INIT_ALPHA = 255;
 
+    private int mType;
     private Player mOwner;
     private boolean isOccupied;
 
     private int mSize;
+    private Paint mBoundPaint;
     private Paint mStrokePaint;
+    private Paint mStrokePaintA;
+    private Paint mStrokePaintB;
     private Paint mFillPaint;
 
-    private Path mPath;
 
-    public HexView(Context context, int size) {
+    private Path mPath;
+    private Path mPathALeft;
+    private Path mPathARight;
+    private Path mPathBTop;
+    private Path mPathBBottom;
+
+    public HexView(Context context, int size, int type) {
         super(context);
         mSize = size;
+        mType = type;
         initPaint();
         initPath();
         setDrawingCacheEnabled(true);
@@ -90,6 +106,40 @@ public class HexView extends View implements HexChess {
         mFillPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         mFillPaint.setColor(PAINT_FILL_INIT_COLOR);
         mFillPaint.setStyle(Paint.Style.FILL);
+
+        if ((mType & BOARD_LEFT) != 0 || (mType & BOARD_RIGHT) != 0) {
+            intStrokeAPaint();
+        }
+        if ((mType & BOARD_TOP) != 0 || (mType & BOARD_BOTTOM) != 0) {
+            intStrokeBPaint();
+        }
+        if (mType != 0) {
+            initBoundPaint();
+        }
+    }
+
+    private void initBoundPaint() {
+        mBoundPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
+        mBoundPaint.setStrokeWidth(STROKE_SIZE * 8);
+        mBoundPaint.setStrokeCap(Paint.Cap.ROUND);
+        mBoundPaint.setColor(getResources().getColor(R.color.gray_100));
+        mBoundPaint.setStyle(Paint.Style.STROKE);
+    }
+
+    private void intStrokeAPaint() {
+        mStrokePaintA = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
+        mStrokePaintA.setStrokeWidth(STROKE_SIZE * 4);
+        mStrokePaintA.setStrokeCap(Paint.Cap.ROUND);
+        mStrokePaintA.setColor(getResources().getColor(R.color.indigo_500));
+        mStrokePaintA.setStyle(Paint.Style.STROKE);
+    }
+
+    private void intStrokeBPaint() {
+        mStrokePaintB = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
+        mStrokePaintB.setStrokeWidth(STROKE_SIZE * 4);
+        mStrokePaintB.setStrokeCap(Paint.Cap.ROUND);
+        mStrokePaintB.setColor(getResources().getColor(R.color.pink_500));
+        mStrokePaintB.setStyle(Paint.Style.STROKE);
     }
 
     @Override
@@ -111,6 +161,20 @@ public class HexView extends View implements HexChess {
     protected void onDraw(Canvas canvas) {
         canvas.drawPath(mPath, mFillPaint);
         canvas.drawPath(mPath, mStrokePaint);
+        if (mPathALeft != null) {
+//            canvas.drawPath(mPathALeft, mBoundPaint);
+            canvas.drawPath(mPathALeft, mStrokePaintA);
+        } else if (mPathARight != null) {
+//            canvas.drawPath(mPathARight, mBoundPaint);
+            canvas.drawPath(mPathARight, mStrokePaintA);
+        }
+        if (mPathBTop != null) {
+//            canvas.drawPath(mPathBTop, mBoundPaint);
+            canvas.drawPath(mPathBTop, mStrokePaintB);
+        } else if (mPathBBottom != null) {
+//            canvas.drawPath(mPathBBottom, mBoundPaint);
+            canvas.drawPath(mPathBBottom, mStrokePaintB);
+        }
     }
 
     @Override
@@ -170,5 +234,61 @@ public class HexView extends View implements HexChess {
         mPath.lineTo(x4, y4);
         mPath.lineTo(x5, y5);
         mPath.close();
+
+        if ((mType & BOARD_LEFT) != 0) {
+            mPathALeft = new Path();
+            mPathALeft.moveTo(x1, y1);
+            mPathALeft.lineTo(x2, y2);
+            mPathALeft.lineTo(x3, y3);
+        }
+        if ((mType & BOARD_RIGHT) != 0) {
+            mPathARight = new Path();
+            mPathARight.moveTo(x0, y0);
+            mPathARight.lineTo(x5, y5);
+            mPathARight.lineTo(x4, y4);
+        }
+        if ((mType & BOARD_TOP) != 0) {
+            mPathBTop = new Path();
+            mPathBTop.moveTo(x1, y1);
+            mPathBTop.lineTo(x0, y0);
+            mPathBTop.lineTo(x5, y5);
+        }
+        if ((mType & BOARD_BOTTOM) != 0) {
+            mPathBBottom = new Path();
+            mPathBBottom.moveTo(x2, y2);
+            mPathBBottom.lineTo(x3, y3);
+            mPathBBottom.lineTo(x4, y4);
+        }
+    }
+
+    public static int type(int boardN, int id) {
+        int row = (id - 1) / boardN;
+        int col = (id - 1) % boardN;
+        int boardNum = boardN * boardN;
+        if (id == 1) { // top-left
+            return BOARD_TOP | BOARD_LEFT;
+        }
+        if (id == boardN) { // top-right
+            return BOARD_TOP | BOARD_RIGHT;
+        }
+        if (id == boardNum - boardN + 1) { // bottom-left
+            return BOARD_BOTTOM | BOARD_LEFT;
+        }
+        if (id == boardNum) { // bottom-right
+            return BOARD_BOTTOM | BOARD_RIGHT;
+        }
+        if (row == 0) { // top
+            return BOARD_TOP;
+        }
+        if (row == boardN - 1) { // bottom
+            return BOARD_BOTTOM;
+        }
+        if (col == 0) { // left
+            return BOARD_LEFT;
+        }
+        if (col == boardN - 1) { // right
+            return BOARD_RIGHT;
+        }
+        return BOARD_CENTER;
     }
 }
