@@ -9,11 +9,13 @@ import android.os.Handler;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import com.yuan.hexgame.R;
 import com.yuan.hexgame.ui.widget.Avatar;
 import com.yuan.hexgame.ui.widget.HexView;
 import com.yuan.hexgame.util.LogUtil;
+import com.yuan.hexgame.util.RandomUtil;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -31,6 +33,7 @@ public class HexGame implements Game {
 
     private Board mBoard;
 
+    private Player mFirstPlayer = Player.A;
     private Player mCurrentPlayer;
 
     private GameSettings mSettings;
@@ -58,7 +61,8 @@ public class HexGame implements Game {
         mPlayerAAvatar = playerA;
         mPlayerBAvatar = playerB;
         mSettings = GameSettings.getInstance();
-        mCurrentPlayer = mSettings.getFirstPlayer();
+        mFirstPlayer = newGameFirstPlayer();
+        mCurrentPlayer = mFirstPlayer;
         if (mSettings.getGameMode() == GameSettings.MODE_HUMAN_VS_ROBOT) {
             mRobot = new MonteCarloRobot(Player.B);
         }
@@ -73,8 +77,9 @@ public class HexGame implements Game {
 
     @Override
     public void start() {
+        Toast.makeText(mContext, mFirstPlayer == Player.A ? mContext.getString(R.string.toast_msg_a_play_first) : mContext.getString(R.string.toast_msg_b_play_first), Toast.LENGTH_SHORT).show();
         if (mSettings.getGameMode() == GameSettings.MODE_HUMAN_VS_ROBOT
-                && mSettings.getFirstPlayer() == Player.B) {
+                && mFirstPlayer == Player.B) {
             int num = mBoard.getChessNum();
             int firstPos = 0;
             if (num % 2 == 1) {
@@ -210,7 +215,7 @@ public class HexGame implements Game {
         mOccupiedViewIds.clear();
         isGameOver = false;
         mWinner = null;
-        mCurrentPlayer = mSettings.getFirstPlayer();
+        mCurrentPlayer = newGameFirstPlayer();
         mMainThreadHandler.postDelayed(new Runnable() {
 
             @Override
@@ -223,6 +228,20 @@ public class HexGame implements Game {
     @Override
     public void setOnGameOverListener(OnGameOverListener onGameOverListener) {
         mOnGameOverListener = onGameOverListener;
+    }
+
+    private Player newGameFirstPlayer() {
+        switch (mSettings.getFirstPlayerMode()) {
+            case GameSettings.FIRST_PLAYER_TAKE_TURNS:
+                return mFirstPlayer = mFirstPlayer.component();
+            case GameSettings.FIRST_PLAYER_RANDOM:
+                return mFirstPlayer = RandomUtil.getInt(2) == 1 ? Player.B : Player.A;
+            case GameSettings.FIRST_PLAYER_A:
+                return mFirstPlayer = Player.A;
+            case GameSettings.FIRST_PLAYER_B:
+            default:
+                return mFirstPlayer = Player.B;
+        }
     }
 
     private class RobotTask extends AsyncTask<Void, Integer, Integer> {

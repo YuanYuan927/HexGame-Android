@@ -3,6 +3,9 @@
 
     <string name="app_name">HEX</string>
 
+    <string name="toast_msg_a_play_first">Blue plays first!</string>
+    <string name="toast_msg_b_play_first">Red plays first!</string>
+
     <!-- Settings -->
     <string name="settings_screen_title">Settings</string>
     <string name="settings_key_board_size">settings_key_board_size</string>
@@ -22,14 +25,16 @@
     <string name="settings_key_first_player">settings_key_first_player</string>
     <string name="settings_title_first_player">First Player</string>
     <string-array name="settings_first_player">
+        <item>Take Turns</item>
+        <item>Random</item>
         <item>Player I</item>
         <item>Player II</item>
-        <item>Random</item>
     </string-array>
     <string-array name="settings_first_player_values">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
     </string-array>
 
     <string name="settings_key_color">settings_key_color</string>

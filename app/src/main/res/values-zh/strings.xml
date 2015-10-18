@@ -3,6 +3,9 @@
 
     <string name="app_name">六角星棋</string>
 
+    <string name="toast_msg_a_play_first">蓝方先下！</string>
+    <string name="toast_msg_b_play_first">红方先下！</string>
+
     <!-- Settings -->
     <string name="settings_screen_title">游戏设置</string>
     <string name="settings_key_board_size">settings_key_board_size</string>
@@ -14,22 +17,14 @@
         <item>玩家 VS 电脑</item>
         <item>玩家 VS 玩家</item>
     </string-array>
-    <string-array name="settings_game_mode_values">
-        <item>0</item>
-        <item>1</item>
-    </string-array>
 
     <string name="settings_key_first_player">settings_key_first_player</string>
     <string name="settings_title_first_player">先下玩家</string>
     <string-array name="settings_first_player">
+        <item>轮流</item>
+        <item>随机</item>
         <item>玩家 I</item>
         <item>玩家 II</item>
-        <item>随机</item>
-    </string-array>
-    <string-array name="settings_first_player_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
     </string-array>
 
     <string name="settings_key_color">settings_key_color</string>

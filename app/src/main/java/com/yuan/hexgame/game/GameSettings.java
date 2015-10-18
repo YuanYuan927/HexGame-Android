@@ -17,9 +17,10 @@ public class GameSettings {
     public static final int MODE_HUMAN_VS_ROBOT = 0;
     public static final int MODE_HUMAN_VS_HUMAN = 1;
 
-    public static final int FIRST_PLAYER_A = 0;
-    public static final int FIRST_PLAYER_B = 1;
-    public static final int FIRST_PLAYER_RANDOM = 2;
+    public static final int FIRST_PLAYER_TAKE_TURNS = 0;
+    public static final int FIRST_PLAYER_RANDOM = 1;
+    public static final int FIRST_PLAYER_A = 2;
+    public static final int FIRST_PLAYER_B = 3;
 
     private static final String SETTINGS_KEY_CHESS_BOARD_N_MAX = "settings-key-chess-board-n-max";
     private static final String SETTINGS_KEY_BOARD_PADDING_TOP = "settings-key-padding-top";
@@ -82,12 +83,8 @@ public class GameSettings {
         return Integer.valueOf(getString(SETTINGS_KEY_GAME_MODE));
     }
 
-//    public int getFirstPlayer() {
-//        return Integer.valueOf(getString(SETTINGS_KEY_FIRST_PLAYER));
-//    }
-
-    public Player getFirstPlayer() {
-        return mWhoPlayFirst;
+    public int getFirstPlayerMode() {
+        return Integer.valueOf(getString(SETTINGS_KEY_FIRST_PLAYER));
     }
 
     public void setBoardPaddingTop(int paddingTop) {

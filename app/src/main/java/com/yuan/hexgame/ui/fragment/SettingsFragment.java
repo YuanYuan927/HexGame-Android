@@ -16,6 +16,7 @@ public class SettingsFragment extends PreferenceFragment {
 
     private ListPreference mBoardSize;
     private ListPreference mGameMode;
+    private ListPreference mFirstPlayerMode;
     private Preference mVersion;
 
     @Override
@@ -42,6 +43,10 @@ public class SettingsFragment extends PreferenceFragment {
         mGameMode.setSummary(mGameMode.getEntry());
         mGameMode.setOnPreferenceChangeListener(mOnPreferenceChangeListener);
 
+        mFirstPlayerMode = (ListPreference) findPreference(getString(R.string.settings_key_first_player));
+        mFirstPlayerMode.setSummary(mFirstPlayerMode.getEntry());
+        mFirstPlayerMode.setOnPreferenceChangeListener(mOnPreferenceChangeListener);
+
         mVersion = findPreference(getString(R.string.settings_key_version));
         mVersion.setSummary(BuildConfig.VERSION_NAME);
     }
@@ -55,6 +60,9 @@ public class SettingsFragment extends PreferenceFragment {
             } else if (preference.getKey().equals(getString(R.string.settings_key_game_mode))) {
                 mGameMode.setValue((String) newValue);
                 mGameMode.setSummary(mGameMode.getEntry());
+            } else if (preference.getKey().equals(getString(R.string.settings_key_first_player))) {
+                mFirstPlayerMode.setValue((String) newValue);
+                mFirstPlayerMode.setSummary(mFirstPlayerMode.getEntry());
             }
             return true;
         }
