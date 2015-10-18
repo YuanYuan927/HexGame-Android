@@ -193,6 +193,8 @@ public class HexView extends View implements HexChess {
 
     @Override
     public void setAlpha(float alpha) {
+        if (mOwner == null)
+            return;
         Resources res = getResources();
         int color = mOwner.equals(Player.A) ? res.getColor(R.color.indigo_500) : res.getColor(R.color.pink_500);
         int paintAlpha = (int) (PAINT_FILL_INIT_ALPHA * alpha);
