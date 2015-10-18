@@ -231,12 +231,13 @@ public class HexGameActivity extends Activity
             @Override
             public void onWizardOver() {
                 mMenuBar.setVisibility(View.INVISIBLE);
+                mGame.restart();
                 for (int i = 1; i < mHexViews.length; i++) {
                     if (mHexViews[i].isOccupied()) {
                         mHexViews[i].reset();
                     }
                 }
-                mGame.restart();
+
             }
         });
     }
@@ -343,7 +344,7 @@ public class HexGameActivity extends Activity
 
     @Override
     public void onGameOver(Player winner) {
-        GameResultDialogFragment.newInstance(winner).show(getFragmentManager(), "Game Result");
+        GameResultDialogFragment.newInstance(this, winner).show(getFragmentManager(), "Game Result");
 //        LogUtil.i(TAG, "A win!");
     }
 

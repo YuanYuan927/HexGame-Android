@@ -6,6 +6,14 @@
     <string name="toast_msg_a_play_first">Blue plays first!</string>
     <string name="toast_msg_b_play_first">Red plays first!</string>
 
+    <string name="game_result_dialog_title">Result</string>
+    <string name="game_result_dialog_msg_human_win">Congratulations! You win!</string>
+    <string name="game_result_dialog_msg_robot_win">Robot wins the game.</string>
+    <string name="game_result_dialog_msg_a_win">Blue wins!</string>
+    <string name="game_result_dialog_msg_b_win">Red wins!</string>
+    <string name="game_result_dialog_button_share">Share</string>
+    <string name="game_result_dialog_button_play_again">Play Again</string>
+
     <!-- Settings -->
     <string name="settings_screen_title">Settings</string>
     <string name="settings_key_board_size">settings_key_board_size</string>

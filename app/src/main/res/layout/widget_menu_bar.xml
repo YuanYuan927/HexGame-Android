@@ -9,26 +9,27 @@
         android:id="@+id/iv_settings"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:padding="8dp"
-        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:padding="8dp"
         android:src="@drawable/selector_menu_settings"/>
 
     <ImageView
         android:id="@+id/iv_social_share"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:padding="8dp"
         android:layout_below="@id/iv_settings"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/selector_menu_social_share"/>
+        android:padding="8dp"
+        android:src="@drawable/selector_menu_social_share"
+        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/iv_game_help"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:padding="8dp"
         android:layout_below="@id/iv_social_share"
         android:layout_centerHorizontal="true"
+        android:padding="8dp"
         android:src="@drawable/selector_menu_game_help"/>
 </RelativeLayout>

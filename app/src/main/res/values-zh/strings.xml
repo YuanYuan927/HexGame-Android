@@ -6,6 +6,14 @@
     <string name="toast_msg_a_play_first">蓝方先下！</string>
     <string name="toast_msg_b_play_first">红方先下！</string>
 
+    <string name="game_result_dialog_title">游戏结果</string>
+    <string name="game_result_dialog_msg_human_win">赢了，你真是太给力了！</string>
+    <string name="game_result_dialog_msg_robot_win">好遗憾！</string>
+    <string name="game_result_dialog_msg_a_win">蓝方胜利！</string>
+    <string name="game_result_dialog_msg_b_win">红方胜利！</string>
+    <string name="game_result_dialog_button_share">分享战绩</string>
+    <string name="game_result_dialog_button_play_again">再战一局</string>
+
     <!-- Settings -->
     <string name="settings_screen_title">游戏设置</string>
     <string name="settings_key_board_size">settings_key_board_size</string>
