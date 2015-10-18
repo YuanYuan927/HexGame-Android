@@ -21,10 +21,10 @@
         android:entries="@array/settings_first_player"
         android:entryValues="@array/settings_first_player_values"
         android:defaultValue="0"/>
-    <com.yuan.hexgame.ui.preference.ColorSelectorPreference
-        android:title="@string/settings_title_color"
-        android:dialogTitle="@string/settings_title_color"
-        android:key="@string/settings_key_color"/>
+    <!--<com.yuan.hexgame.ui.preference.ColorSelectorPreference-->
+        <!--android:title="@string/settings_title_color"-->
+        <!--android:dialogTitle="@string/settings_title_color"-->
+        <!--android:key="@string/settings_key_color"/>-->
     <Preference
         android:title="@string/settings_title_version"
         android:key="@string/settings_key_version"/>
