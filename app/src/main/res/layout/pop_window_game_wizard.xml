@@ -6,20 +6,22 @@
     android:background="@drawable/shape_dialog_background">
 
     <RelativeLayout
-        android:layout_width="250dp"
-        android:layout_height="140dp">
+        android:layout_width="320dp"
+        android:layout_height="180dp">
 
         <RelativeLayout
             android:id="@+id/rl_wizard_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp">
-
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
             <RelativeLayout
                 android:id="@+id/rl_wizard_num"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
                 android:layout_alignBottom="@+id/tv_wizard_title"
                 android:layout_alignTop="@+id/tv_wizard_title">
 
@@ -27,7 +29,8 @@
                     android:id="@+id/iv_wizard_num"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="1dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/wizard_num_red_500"/>
 
@@ -38,19 +41,20 @@
                     android:layout_centerInParent="true"
                     android:text="1"
                     android:textColor="@color/gray_100"
-                    android:textSize="12sp"/>
+                    android:textSize="@dimen/material_text_caption"/>
             </RelativeLayout>
-
             <TextView
                 android:id="@+id/tv_wizard_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="3dp"
                 android:layout_toRightOf="@id/rl_wizard_num"
+                android:layout_marginLeft="6dp"
                 android:text="Game Rule"
                 android:textColor="@color/gray_900"
-                android:textSize="15sp"/>
+                android:textSize="@dimen/material_text_subtitle"/>
+
+
         </RelativeLayout>
 
         <TextView
@@ -58,25 +62,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/rl_wizard_title"
-            android:layout_margin="15dp"
-            android:lineSpacingExtra="3dp"
-            android:text="Welcome to Hex Game! Welcome to Hex Game! Welcome to Hex Game! Welcome to Hex Game!"
+            android:layout_margin="16dp"
+            android:lineSpacingExtra="5dp"
+            android:text="@string/game_wizard_3_msg"
             android:textColor="@color/gray_800"
-            android:textSize="12sp"/>
+            android:textSize="@dimen/material_text_body1"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="15dp">
+            android:layout_margin="16dp">
 
             <TextView
                 android:id="@+id/tv_previous"
                 android:layout_width="wrap_content"
-                android:layout_height="24dp"
+                android:layout_height="32dp"
                 android:background="@drawable/selector_dialog_button"
                 android:clickable="true"
                 android:gravity="center"
@@ -84,12 +86,12 @@
                 android:paddingRight="10dp"
                 android:text="@string/game_wizard_previous"
                 android:textColor="@color/teal_500"
-                android:textSize="10sp"/>
+                android:textSize="@dimen/material_text_button"/>
 
             <TextView
                 android:id="@+id/tv_next"
                 android:layout_width="wrap_content"
-                android:layout_height="24dp"
+                android:layout_height="32dp"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/tv_previous"
                 android:background="@drawable/selector_dialog_button"
@@ -99,7 +101,7 @@
                 android:paddingRight="10dp"
                 android:text="@string/game_wizard_next"
                 android:textColor="@color/teal_500"
-                android:textSize="10sp"/>
+                android:textSize="@dimen/material_text_button"/>
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

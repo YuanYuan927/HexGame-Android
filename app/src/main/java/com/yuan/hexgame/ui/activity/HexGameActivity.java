@@ -17,6 +17,7 @@ import android.view.WindowManager;
 
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.analytics.game.UMGameAgent;
+import com.yuan.hexgame.BuildConfig;
 import com.yuan.hexgame.R;
 import com.yuan.hexgame.game.Game;
 import com.yuan.hexgame.game.GameSettings;
@@ -54,6 +55,7 @@ public class HexGameActivity extends Activity
 
     private GameSettings mSettings = GameSettings.getInstance();
 
+    private boolean mIsAppFirstLaunched = false;
     private GameWizard mGameWizard;
 
     @Override
@@ -87,7 +89,7 @@ public class HexGameActivity extends Activity
         mGame = new HexGame(this, boardN, mHexViews, mAvatarA, mAvatarB);
         mGame.setOnGameOverListener(this);
 
-
+        initGameWizard();
     }
 
     @Override
@@ -196,7 +198,6 @@ public class HexGameActivity extends Activity
         mGameWizard.addWizardPopupWindow(R.string.game_wizard_5_title, R.string.game_wizard_5_msg, menuWizardX, menuWizardY);
         mGameWizard.addWizardPopupWindow(R.string.game_wizard_6_title, R.string.game_wizard_6_msg, menuWizardX, menuWizardY + menuWizardYDelta);
         mGameWizard.addWizardPopupWindow(R.string.game_wizard_7_title, R.string.game_wizard_7_msg, menuWizardX, menuWizardY + 2 * menuWizardYDelta, true);
-        mGameWizard.show();
         mGameWizard.setGameWizardListener(new GameWizard.GameWizardListener() {
             @Override
             public void onWizardShow(int id, boolean isLast) {
@@ -210,6 +211,7 @@ public class HexGameActivity extends Activity
                         showPlayerBWinWizard();
                         break;
                     case 4:
+                        mMenuBar.setVisibility(View.VISIBLE);
                         break;
                     case 5:
                         break;
@@ -222,6 +224,13 @@ public class HexGameActivity extends Activity
 
             @Override
             public void onWizardOver() {
+                mMenuBar.setVisibility(View.INVISIBLE);
+                for (int i = 1; i < mHexViews.length; i++) {
+                    if (mHexViews[i].isOccupied()) {
+                        mHexViews[i].reset();
+                    }
+                }
+                mGame.restart();
             }
         });
     }
@@ -249,6 +258,10 @@ public class HexGameActivity extends Activity
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus && isWindowFocusFirstTime) {
             mGame.start();
+            if (mIsAppFirstLaunched) {
+                mGameWizard.show();
+                mSettings.setVersionCode(BuildConfig.VERSION_CODE);
+            }
             isWindowFocusFirstTime = false;
         }
     }
@@ -292,7 +305,11 @@ public class HexGameActivity extends Activity
         @Override
         public void onShareClick() {
             LogUtil.i(TAG, "Click Share");
-            initGameWizard();
+        }
+
+        @Override
+        public void onGameHelpClick() {
+            mGameWizard.show();
         }
     };
 
@@ -322,5 +339,9 @@ public class HexGameActivity extends Activity
     public void onGameOver(Player winner) {
         GameResultDialogFragment.newInstance(winner).show(getFragmentManager(), "Game Result");
 //        LogUtil.i(TAG, "A win!");
+    }
+
+    private boolean isAppFirstLaunched() {
+        return mSettings.getVersionCode() < BuildConfig.VERSION_CODE;
     }
 }

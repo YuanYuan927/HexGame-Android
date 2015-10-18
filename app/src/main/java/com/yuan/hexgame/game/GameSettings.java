@@ -23,6 +23,8 @@ public class GameSettings {
 
     private static final String SETTINGS_KEY_CHESS_BOARD_N_MAX = "settings-key-chess-board-n-max";
     private static final String SETTINGS_KEY_BOARD_PADDING_TOP = "settings-key-padding-top";
+    private static final String KEY_VERSION_CODE = "version-code";
+
     private final String SETTINGS_KEY_BOARD_N;
     private final String SETTINGS_KEY_GAME_MODE;
     private final String SETTINGS_KEY_FIRST_PLAYER;
@@ -94,6 +96,14 @@ public class GameSettings {
 
     public int getBoardPaddingTop() {
         return getInt(SETTINGS_KEY_BOARD_PADDING_TOP, 0);
+    }
+
+    public void setVersionCode(int versionCode) {
+        putInt(KEY_VERSION_CODE, versionCode);
+    }
+
+    public int getVersionCode() {
+        return getInt(KEY_VERSION_CODE, 0);
     }
 
     private int getInt(String key, int defValue) {

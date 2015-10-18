@@ -2,6 +2,7 @@ package com.yuan.hexgame.game;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,18 +42,18 @@ public class GameWizard {
     }
 
     public void addWizardPopupWindow(int titleResId, int msgResId, int x, int y) {
-        addWizardPopupWindow(mActivity.getString(titleResId), mActivity.getString(msgResId), x, y, false);
+        addWizardPopupWindow(titleResId, msgResId, x, y, false);
     }
 
     public void addWizardPopupWindow(int titleResId, int msgResId, int x, int y, boolean isLast) {
-        addWizardPopupWindow(mActivity.getString(titleResId), mActivity.getString(msgResId), x, y, isLast);
+        addWizardPopupWindow(mActivity.getString(titleResId), Html.fromHtml(mActivity.getString(msgResId)), x, y, isLast);
     }
 
     public void addWizardPopupWindow(String title, String msg, int x, int y) {
         addWizardPopupWindow(title, msg, x, y, false);
     }
 
-    public void addWizardPopupWindow(String title, String msg, int x, int y, boolean isLast) {
+    public void addWizardPopupWindow(CharSequence title, CharSequence msg, int x, int y, boolean isLast) {
         final int currentIndex = mWizardPopWindowList.size() + 1; // Index starts from 1.
         final GameWizardPopupWindow wizard = new GameWizardPopupWindow(mActivity, currentIndex, title, msg, x, y);
         if (currentIndex == 1) {
@@ -88,6 +89,9 @@ public class GameWizard {
                 @Override
                 public void onClick(View v) {
                     wizard.dismiss();
+                    if (mGameWizardListener != null) {
+                        mGameWizardListener.onWizardOver();
+                    }
                 }
             });
         }

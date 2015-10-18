@@ -17,6 +17,7 @@ public class MenuBar extends RelativeLayout {
 
     private ImageView mIvSettings;
     private ImageView mIvShare;
+    private ImageView mIvGameHelp;
 
     private OnMenuOptionClickListener mOnMenuOptionClickListener;
 
@@ -31,24 +32,29 @@ public class MenuBar extends RelativeLayout {
     public MenuBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         View layout = LayoutInflater.from(context).inflate(R.layout.widget_menu_bar, this, true);
-        layout.setOnClickListener(mOnClickListener);
         mIvSettings = (ImageView) layout.findViewById(R.id.iv_settings);
         mIvShare = (ImageView) layout.findViewById(R.id.iv_social_share);
+        mIvGameHelp = (ImageView) layout.findViewById(R.id.iv_game_help);
+
         mIvSettings.setOnClickListener(mOnClickListener);
         mIvShare.setOnClickListener(mOnClickListener);
+        mIvGameHelp.setOnClickListener(mOnClickListener);
     }
 
     private OnClickListener mOnClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.iv_settings:
-                    if (mOnMenuOptionClickListener != null)
+            if (mOnMenuOptionClickListener != null) {
+                switch (v.getId()) {
+                    case R.id.iv_settings:
                         mOnMenuOptionClickListener.onSettingsClick();
-                    break;
-                case R.id.iv_social_share:
-                    if (mOnMenuOptionClickListener != null)
+                        break;
+                    case R.id.iv_social_share:
                         mOnMenuOptionClickListener.onShareClick();
+                        break;
+                    case R.id.iv_game_help:
+                        mOnMenuOptionClickListener.onGameHelpClick();
+                }
             }
         }
     };
@@ -56,6 +62,7 @@ public class MenuBar extends RelativeLayout {
     public interface OnMenuOptionClickListener {
         public void onSettingsClick();
         public void onShareClick();
+        public void onGameHelpClick();
     }
 
     public void setOnMenuOptionClickListener(OnMenuOptionClickListener onMenuOptionClickListener) {
