@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Hex Game</string>
+    <string name="app_name">HEX</string>
 
     <!-- Settings -->
     <string name="settings_screen_title">Settings</string>
@@ -42,18 +42,18 @@
     <!-- Game Wizard Start -->
     <string name="game_wizard_1_title">Welcome</string>
     <string name="game_wizard_1_msg">Let\'s go to learn how to play it!</string>
-    <string name="game_wizard_2_title">Blue Win</string>
-    <string name="game_wizard_2_msg">If the Blue pieces connect the <b>LEFT</b> to <b>RIGHT</b>, the blue player wins.</string>
-    <string name="game_wizard_3_title">Red Win</string>
-    <string name="game_wizard_3_msg">If the Red pieces connect the <b>UP</b> to <b>BOTTOM</b>, the red player wins. </string>
+    <string name="game_wizard_2_title">Blue Wins</string>
+    <string name="game_wizard_2_msg">If the &lt;font color="#3f51b5"&gt;&lt;b&gt;BLUE&lt;/b&gt;&lt;/font&gt; pieces connect the &lt;font color="#3f51b5"&gt;&lt;b&gt;LEFT&lt;/b&gt;&lt;/font&gt; to &lt;font color="#3f51b5"&gt;&lt;b&gt;RIGHT&lt;/b&gt;&lt;/font&gt;, the &lt;font color="#3f51b5"&gt;&lt;b&gt;BLUE&lt;/b&gt;&lt;/font&gt; player wins.</string>
+    <string name="game_wizard_3_title">Red Wins</string>
+    <string name="game_wizard_3_msg">If the &lt;font color="#e91e63"&gt;&lt;b&gt;RED&lt;/b&gt;&lt;/font&gt; pieces connect the &lt;font color="#e91e63"&gt;&lt;b&gt;TOP&lt;/b&gt;&lt;/font&gt; to &lt;font color="#e91e63"&gt;&lt;b&gt;BOTTOM&lt;/b&gt;&lt;/font&gt;, the &lt;font color="#e91e63"&gt;&lt;b&gt;RED&lt;/b&gt;&lt;/font&gt; player wins. </string>
     <string name="game_wizard_4_title">Game Menu</string>
     <string name="game_wizard_4_msg">Click the avatar to show the menu.</string>
     <string name="game_wizard_5_title">Settings</string>
     <string name="game_wizard_5_msg">You can set the board size, the game mode, etc.</string>
     <string name="game_wizard_6_title">Share</string>
-    <string name="game_wizard_6_msg">Share the awesome game to your friends.</string>
+    <string name="game_wizard_6_msg">Share the awesome &lt;b&gt;HEX&lt;/b&gt; game to your friends!</string>
     <string name="game_wizard_7_title">Help</string>
-    <string name="game_wizard_7_msg">Watch the game wizard.</string>
+    <string name="game_wizard_7_msg">Read the game wizard.</string>
     <string name="game_wizard_next">NEXT</string>
     <string name="game_wizard_previous">PREVIOUS</string>
     <string name="game_wizard_go">GO</string>

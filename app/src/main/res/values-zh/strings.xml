@@ -41,21 +41,21 @@
 
     <!-- Game Wizard Start -->
     <string name="game_wizard_1_title">欢迎</string>
-    <string name="game_wizard_1_msg">让我们一起了解六角星棋游戏规则吧！</string>
+    <string name="game_wizard_1_msg">让我来为你介绍&lt;b&gt;六角星棋&lt;/b&gt;吧！</string>
     <string name="game_wizard_2_title">蓝方获胜</string>
-    <string name="game_wizard_2_msg">如果蓝色棋子将棋盘<b>左右</b>边界连接起来，则蓝方获胜。</string>
+    <string name="game_wizard_2_msg">如果&lt;font color="#3f51b5"&gt;&lt;b&gt;蓝色&lt;/b&gt;&lt;/font&gt;棋子将棋盘&lt;font color="#3f51b5"&gt;&lt;b&gt;左右&lt;/b&gt;&lt;/font&gt;边界连接起来，则&lt;font color="#3f51b5"&gt;&lt;b&gt;蓝方&lt;/b&gt;&lt;/font&gt;获胜。</string>
     <string name="game_wizard_3_title">红方获胜</string>
-    <string name="game_wizard_3_msg">如果红色棋子将棋盘<b>上下</b>边界连接起来，则红方获胜。 </string>
+    <string name="game_wizard_3_msg">如果&lt;font color="#e91e63"&gt;&lt;b&gt;红色&lt;/b&gt;&lt;/font&gt;棋子将棋盘&lt;font color="#e91e63"&gt;&lt;b&gt;上下&lt;/b&gt;&lt;/font&gt;边界连接起来，则&lt;font color="#e91e63"&gt;&lt;b&gt;红方&lt;/b&gt;&lt;/font&gt;获胜。</string>
     <string name="game_wizard_4_title">游戏菜单</string>
-    <string name="game_wizard_4_msg">点击头像显示游戏菜单</string>
+    <string name="game_wizard_4_msg">点击头像显示游戏菜单。</string>
     <string name="game_wizard_5_title">游戏设置</string>
-    <string name="game_wizard_5_msg">你可以设置棋盘大小，游戏模式，先下玩家等</string>
+    <string name="game_wizard_5_msg">你可以设置棋盘大小，游戏模式，先下玩家等。</string>
     <string name="game_wizard_6_title">分享</string>
-    <string name="game_wizard_6_msg">将好玩的六角星棋分享给你的小伙伴们吧！</string>
+    <string name="game_wizard_6_msg">将好玩的&lt;b&gt;六角星棋&lt;/b&gt;分享给你的小伙伴们吧！</string>
     <string name="game_wizard_7_title">帮助</string>
-    <string name="game_wizard_7_msg">重新观看游戏向导。</string>
-    <string name="game_wizard_next">下一步</string>
-    <string name="game_wizard_previous">上一步</string>
+    <string name="game_wizard_7_msg">重新阅读游戏向导。</string>
+    <string name="game_wizard_next">下一项</string>
+    <string name="game_wizard_previous">上一项</string>
     <string name="game_wizard_go">游戏介绍</string>
     <string name="game_wizard_start_to_play">完成</string>
     <!-- Game Wizard End -->
