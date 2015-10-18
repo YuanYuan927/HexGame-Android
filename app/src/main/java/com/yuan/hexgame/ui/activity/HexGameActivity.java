@@ -194,16 +194,16 @@ public class HexGameActivity extends Activity
         DisplayMetrics dm = getResources().getDisplayMetrics();
         int screenHeight = dm.heightPixels;
         int screenWidth = dm.widthPixels;
-        int menuWizardX = (int) (screenWidth - (48 + 250 + 10) * dm.density);
+        int menuWizardX = (int) (screenWidth - (48 + 320 + 10) * dm.density);
         int menuWizardY = (int) (20 * dm.density);
         int menuWizardYDelta = (int) (48 * dm.density);
         mGameWizard.addWizardPopupWindow(R.string.game_wizard_1_title, R.string.game_wizard_1_msg, -1, -1);
-        mGameWizard.addWizardPopupWindow(R.string.game_wizard_2_title, R.string.game_wizard_2_msg, (int) (200 * dm.density), screenHeight / 2);
+        mGameWizard.addWizardPopupWindow(R.string.game_wizard_2_title, R.string.game_wizard_2_msg, menuWizardX, screenHeight * 2 / 5);
         mGameWizard.addWizardPopupWindow(R.string.game_wizard_3_title, R.string.game_wizard_3_msg, menuWizardX, menuWizardY);
-        mGameWizard.addWizardPopupWindow(R.string.game_wizard_4_title, R.string.game_wizard_4_msg, (int) (mAvatarAX + AVATAR_SIZE_DP * dm.density), (int) (mAvatarAY - 140 * dm.density));
+        mGameWizard.addWizardPopupWindow(R.string.game_wizard_4_title, R.string.game_wizard_4_msg, (int) (mAvatarAX + AVATAR_SIZE_DP * dm.density), (int) (mAvatarAY - 180 * dm.density));
         mGameWizard.addWizardPopupWindow(R.string.game_wizard_5_title, R.string.game_wizard_5_msg, menuWizardX, menuWizardY);
-        mGameWizard.addWizardPopupWindow(R.string.game_wizard_6_title, R.string.game_wizard_6_msg, menuWizardX, menuWizardY + menuWizardYDelta);
-        mGameWizard.addWizardPopupWindow(R.string.game_wizard_7_title, R.string.game_wizard_7_msg, menuWizardX, menuWizardY + 2 * menuWizardYDelta, true);
+//        mGameWizard.addWizardPopupWindow(R.string.game_wizard_6_title, R.string.game_wizard_6_msg, menuWizardX, menuWizardY + menuWizardYDelta);
+        mGameWizard.addWizardPopupWindow(R.string.game_wizard_7_title, R.string.game_wizard_7_msg, menuWizardX, menuWizardY + 1 * menuWizardYDelta, true);
         mGameWizard.setGameWizardListener(new GameWizard.GameWizardListener() {
             @Override
             public void onWizardShow(int id, boolean isLast) {
