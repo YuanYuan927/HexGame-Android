@@ -44,6 +44,7 @@ public class HexGame implements Game {
 
     private OnGameOverListener mOnGameOverListener;
 
+    private boolean mIsRobotTurn = false;
     private boolean isGameOver = false;
     private Player mWinner;
 
@@ -61,10 +62,13 @@ public class HexGame implements Game {
         if (mSettings.getGameMode() == GameSettings.MODE_HUMAN_VS_ROBOT) {
             mRobot = new MonteCarloRobot(Player.B);
         }
-        mAvatarAnim = new AlphaAnimation(1f, 0.4f);//AnimationUtils.loadAnimation(context, R.anim.avatar_breath);
-        mAvatarAnim.setDuration(2000);
-        mAvatarAnim.setRepeatMode(Animation.REVERSE);
-        mAvatarAnim.setRepeatCount(Animation.INFINITE);
+//        mPlayerAAvatar.setLayerType(HexView.LAYER_TYPE_SOFTWARE, null);
+//        mPlayerBAvatar.setLayerType(HexView.LAYER_TYPE_SOFTWARE, null);
+        mAvatarAnim = AnimationUtils.loadAnimation(context, R.anim.avatar_breath);
+//        mAvatarAnim = new AlphaAnimation(1f, 0.4f);
+//        mAvatarAnim.setDuration(500);
+//        mAvatarAnim.setRepeatMode(Animation.REVERSE);
+//        mAvatarAnim.setRepeatCount(Animation.INFINITE);
     }
 
     @Override
@@ -91,10 +95,8 @@ public class HexGame implements Game {
 
     @Override
     public void putPiece(int id) {
-        if (mBoard.isOccupied(id)) {
-            LogUtil.i(TAG, "Chess " + id + " is occupied.");
+        if (mBoard.isOccupied(id) || mIsRobotTurn)
             return;
-        }
 //        mOccupiedViewIds.add(id);
 //        mBoard.setOwner(id, mCurrentPlayer);
 //        mHexViews[id].setOwner(mCurrentPlayer);
@@ -107,6 +109,7 @@ public class HexGame implements Game {
 //            mHexViews[robotChessPos].setOwner(mCurrentPlayer);
 //            mCurrentPlayer = mCurrentPlayer.component();
 //            new RobotTask().execute();
+            mIsRobotTurn = true;
             final long startT = System.currentTimeMillis();
             mRobot.compute(mBoard, new Robot.RobotStatusListener() {
                 @Override
@@ -142,6 +145,7 @@ public class HexGame implements Game {
                     LogUtil.i(TAG, "Robot cost " + (endT - startT) + "ms");
                     mPlayerBAvatar.clearAnimation();
                     mPlayerAAvatar.startAnimation(mAvatarAnim);
+                    mIsRobotTurn = false;
                 }
             });
         } else if (mSettings.getGameMode() == GameSettings.MODE_HUMAN_VS_HUMAN && (!isGameOver)) {
