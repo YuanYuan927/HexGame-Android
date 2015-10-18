@@ -181,6 +181,12 @@ public class HexGameActivity extends Activity
                 mMenuBar.setVisibility(mMenuBar.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
             }
         });
+        mAvatarB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMenuBar.setVisibility(mMenuBar.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
+            }
+        });
     }
 
     private void initGameWizard() {
