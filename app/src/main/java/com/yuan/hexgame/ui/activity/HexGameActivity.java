@@ -55,7 +55,6 @@ public class HexGameActivity extends Activity
 
     private GameSettings mSettings = GameSettings.getInstance();
 
-    private boolean mIsAppFirstLaunched = false;
     private GameWizard mGameWizard;
 
     @Override
@@ -76,7 +75,8 @@ public class HexGameActivity extends Activity
         mMenuBar.setVisibility(View.INVISIBLE);
         mMenuBar.setOnMenuOptionClickListener(mOnMenuOptionClickListener);
 
-        Drawable systemBackground = WallpaperManager.getInstance(this).getDrawable();
+//        Drawable systemBackground = WallpaperManager.getInstance(this).getDrawable();
+        Drawable systemBackground = getResources().getDrawable(R.drawable.background_mac_galaxy);
         Bitmap bmp = blur(((BitmapDrawable) systemBackground).getBitmap());
         mBackground.setBackgroundDrawable(new BitmapDrawable(getResources(), bmp));
 
@@ -268,7 +268,7 @@ public class HexGameActivity extends Activity
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus && isWindowFocusFirstTime) {
             mGame.start();
-            if (mIsAppFirstLaunched) {
+            if (isAppFirstLaunched()) {
                 mGameWizard.show();
                 mSettings.setVersionCode(BuildConfig.VERSION_CODE);
             }
