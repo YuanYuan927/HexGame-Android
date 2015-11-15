@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.yuan.hexgame">
+<manifest
+    package="com.yuan.hexgame"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:name=".base.BaseApplication"
@@ -11,9 +12,9 @@
 
         <activity
             android:name=".ui.activity.HexGameActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/app_name"
-            android:screenOrientation="landscape"
-            android:configChanges="orientation|screenSize|keyboardHidden">
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
