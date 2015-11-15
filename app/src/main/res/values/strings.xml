@@ -73,4 +73,10 @@
     <string name="game_wizard_start_to_play">PLAY</string>
     <!-- Game Wizard End -->
 
+    <!-- Social Start -->
+    <string name="social_share_to">Share to</string>
+    <string name="social_wechat">WeChat</string>
+    <string name="social_moments">Moments</string>
+    <string name="social_wechat_description">Welcome to play HEX game!</string>
+    <!-- Social End -->
 </resources>

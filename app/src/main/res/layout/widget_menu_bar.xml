@@ -21,8 +21,7 @@
         android:layout_below="@id/iv_settings"
         android:layout_centerHorizontal="true"
         android:padding="8dp"
-        android:src="@drawable/selector_menu_social_share"
-        android:visibility="gone"/>
+        android:src="@drawable/selector_menu_social_share"/>
 
     <ImageView
         android:id="@+id/iv_game_help"

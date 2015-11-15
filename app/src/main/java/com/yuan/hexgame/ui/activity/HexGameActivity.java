@@ -1,7 +1,6 @@
 package com.yuan.hexgame.ui.activity;
 
 import android.app.Activity;
-import android.app.WallpaperManager;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -25,6 +24,7 @@ import com.yuan.hexgame.game.GameWizard;
 import com.yuan.hexgame.game.HexGame;
 import com.yuan.hexgame.game.Player;
 import com.yuan.hexgame.ui.dialog.GameResultDialogFragment;
+import com.yuan.hexgame.ui.dialog.SharePanelDialogFragment;
 import com.yuan.hexgame.ui.widget.Avatar;
 import com.yuan.hexgame.ui.widget.HexView;
 import com.yuan.hexgame.ui.widget.MenuBar;
@@ -40,7 +40,6 @@ public class HexGameActivity extends Activity
 
     private ViewGroup mBackground;
     private ViewGroup mRootLayout;
-    private View mEmptyAnchor;
     private MenuBar mMenuBar;
 
     private Game mGame;
@@ -68,6 +67,7 @@ public class HexGameActivity extends Activity
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_hex_game);
         mBackground = (ViewGroup) findViewById(R.id.rl_hex_game_background);
+        mBackground.setDrawingCacheEnabled(true);
         mRootLayout = (ViewGroup) findViewById(R.id.rl_background_mask);
         mRootLayout.setOnLongClickListener(mOnLongClickListener);
         mRootLayout.setOnClickListener(mOnClickListener);
@@ -205,8 +205,8 @@ public class HexGameActivity extends Activity
         mGameWizard.addWizardPopupWindow(R.string.game_wizard_3_title, R.string.game_wizard_3_msg, menuWizardX, menuWizardY);
         mGameWizard.addWizardPopupWindow(R.string.game_wizard_4_title, R.string.game_wizard_4_msg, (int) (mAvatarAX + AVATAR_SIZE_DP * dm.density), (int) (mAvatarAY - 180 * dm.density));
         mGameWizard.addWizardPopupWindow(R.string.game_wizard_5_title, R.string.game_wizard_5_msg, menuWizardX, menuWizardY);
-//        mGameWizard.addWizardPopupWindow(R.string.game_wizard_6_title, R.string.game_wizard_6_msg, menuWizardX, menuWizardY + menuWizardYDelta);
-        mGameWizard.addWizardPopupWindow(R.string.game_wizard_7_title, R.string.game_wizard_7_msg, menuWizardX, menuWizardY + 1 * menuWizardYDelta, true);
+        mGameWizard.addWizardPopupWindow(R.string.game_wizard_6_title, R.string.game_wizard_6_msg, menuWizardX, menuWizardY + menuWizardYDelta);
+        mGameWizard.addWizardPopupWindow(R.string.game_wizard_7_title, R.string.game_wizard_7_msg, menuWizardX, menuWizardY + 2 * menuWizardYDelta, true);
         mGameWizard.setGameWizardListener(new GameWizard.GameWizardListener() {
             @Override
             public void onWizardShow(int id, boolean isLast) {
@@ -315,6 +315,7 @@ public class HexGameActivity extends Activity
         @Override
         public void onShareClick() {
             LogUtil.i(TAG, "Click Share");
+            SharePanelDialogFragment.newInstance(SharePanelDialogFragment.SHARE_GAME).show(getFragmentManager(), "Share Panel");
         }
 
         @Override
@@ -342,13 +343,14 @@ public class HexGameActivity extends Activity
 
     @Override
     public void onShareResultClick() {
+        Bitmap resultBitmap = mBackground.getDrawingCache();
+        SharePanelDialogFragment.newInstance(SharePanelDialogFragment.SHARE_GAME_RESULT, resultBitmap).show(getFragmentManager(), "Share Panel");
         mGame.restart();
     }
 
     @Override
     public void onGameOver(Player winner) {
         GameResultDialogFragment.newInstance(this, winner).show(getFragmentManager(), "Game Result");
-//        LogUtil.i(TAG, "A win!");
     }
 
     private boolean isAppFirstLaunched() {

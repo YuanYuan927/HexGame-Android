@@ -11,7 +11,7 @@
     <string name="game_result_dialog_msg_robot_win">好遗憾！</string>
     <string name="game_result_dialog_msg_a_win">蓝方胜利！</string>
     <string name="game_result_dialog_msg_b_win">红方胜利！</string>
-    <string name="game_result_dialog_button_share">分享战绩</string>
+    <string name="game_result_dialog_button_share">晒晒战绩</string>
     <string name="game_result_dialog_button_play_again">再战一局</string>
 
     <!-- Settings -->
@@ -25,6 +25,10 @@
         <item>玩家 VS 电脑</item>
         <item>玩家 VS 玩家</item>
     </string-array>
+    <string-array name="settings_game_mode_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
 
     <string name="settings_key_first_player">settings_key_first_player</string>
     <string name="settings_title_first_player">先下玩家</string>
@@ -33,6 +37,12 @@
         <item>随机</item>
         <item>玩家 I</item>
         <item>玩家 II</item>
+    </string-array>
+    <string-array name="settings_first_player_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
     </string-array>
 
     <string name="settings_key_color">settings_key_color</string>
@@ -63,4 +73,10 @@
     <string name="game_wizard_start_to_play">完成</string>
     <!-- Game Wizard End -->
 
+    <!-- Social Start -->
+    <string name="social_share_to">分享到</string>
+    <string name="social_wechat">微信</string>
+    <string name="social_moments">朋友圈</string>
+    <string name="social_wechat_description">欢迎来挑战六角星棋！</string>
+    <!-- Social End -->
 </resources>
